@@ -7,5 +7,5 @@
 
 2. Açılan pencerede en altta bulunan `Download ZIP` butonuyla tüm dosyaları indiriniz.
 
-3. 1.hafta kullanılan materyallere erişmek için indirdiğiniz dosyada yer alan ilgili klasördeki `Rpg.html` dosyasına tıklayarak açabilirsiniz.
+3. 1.hafta kullanılan materyallere erişmek için indirdiğiniz dosyada yer alan ilgili klasördeki `Rpg.html` dosyasına tıklayarak ulaşabilirsiniz.
 
