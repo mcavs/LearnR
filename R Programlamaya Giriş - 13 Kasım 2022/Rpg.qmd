@@ -1,0 +1,796 @@
+---
+title: "R Programlamaya Giriş"
+format: html
+editor: visual
+author: "Mustafa Çavuş, Ph.D."
+date: "13 Kasım 2022"
+---
+
+# Neden R?
+
+1. R, bir programlama dilidir.
+    * Basit ve kısa kod yapılarından (*syntax*) oluşur.
+    * Kullanıcıları *Muggle* değildir; yapılabilecek işler hayal gücüyle sınırlıdır.
+
+2. Açık kaynak kod yapısındadır.
+    * Kodların içeriği görülebilir, böylelikle geliştirilmeye açıktır.
+    * Çok sayıda (13 Kasım 2022 itibariyle **18.838**) paket bulunmaktadır. 
+
+3. İstatistiksel analiz/modelleme işlemleri için güçlü bir altyapıya sahiptir.
+
+4. Çeşitli ve yüksek kaliteli görseller sunar.
+    * {ggplot2}, {plotly} vb. [birçok görselleştirme paketi](https://github.com/krzjoa/awesome-r-dataviz)(öne çıkanları ele aldığım [notlarıma](https://twitter.com/mustafa__cavus/status/1517627340209205248?s=20&t=d_HgUJYO_K2Ong6koeciug) göz atabilirsiniz) bulunmaktadır.
+
+5. Güçlü bir komünitesi bulunmaktadır.
+    * [R Consortium](https://www.r-consortium.org/) derneği bir çok etkinlik ve proje için yerel kullanıcı gruplarını desteklemektedir.
+    * 39 farklı ülkede [94 yerel kullanıcı](https://www.meetup.com/pro/r-user-groups/) grubu bulunmaktadır. Bu gruplar ücretsiz ve herkesin katılımına açık etkinlikler düzenlemektedir.
+    * [R Journal](https://journal.r-project.org/) gibi yüksek kaliteli bir bilimsel araştırma dergisi bulunmaktadır.
+    * Her yıl(?) [useR!](https://user2022.r-project.org/) ve [ERUM](https://erum.io/) gibi geniş çaplı uluslararası konferanslar düzenlenmektedir.
+    * Ülkemizde de iki yıldır benzer etkinlikler ulusal düzeyde gerçekleştirilmektedir: [Why R? Turkey 2021](https://whyr.pl/2021/turkey), [Why R? Turkey 2022](https://whyr.pl/2022/turkey). 
+
+6. **ÜCRETSİZ**
+
+
+# Öğrenmek için ne yapma(ma)lı?
+
+1. İlk hata mesajları alındığında karamsarlığa düşülmemeli!
+![](memes.mp4)
+
+Mesajları anlamaya çalışmak ya da *google*'lamak çözüme ulaşmanızı sağlar. Hata yapmadan doğruyu öğrenmek mümkün değil: **No error, no gain!**
+
+2. Hedef odaklı öğrenme, sonuca ulaşmayı sağlar. Bir analizi yapmak, bir modeli kurmak ya da bir grafik çizmek için yola çıkabilirsiniz. Her detayı öğrenmek, olası değil.
+
+3. Bir formal öğrenim (min 2-3 yarıyıl) alma imkanınız yoksa, kendi kendinize öğrenmek için [YouTube](https://www.youtube.com/channel/UCAu9zxmEgQdWYkl84BiziSQ/videos), [GitHub](https://github.com/whyr2021turkey/Konusmalar) vb. ortamlar çok sayıda kaynak sunuyor. Ayrıca [learnR4free](https://www.learnr4free.com/tr/index.html) üzerinden Türkçe kaynakların derlemesine, ve [R for Data Science](http://tr.r4ds.hadley.nz/) kitabının Türkçe versiyonuna göz atabilirsiniz.
+
+4. Öğrenmek için altın kural: Pratik, Pratik ve Pratik.
+
+
+# R ve R Studio'nun Yüklenmesi
+
+R kullanabilmek için [https://cran.r-project.org/](https://cran.r-project.org/) web sayfasından kullandığınız işletim sisteminize uygun olan kurulum dosyalarını indirmeniz gerekmektedir. 
+
+![](cran.png)
+
+İlgili dosyayı indirip, yükledikten sonra temel R ekranına ulaşabilirsiniz.
+
+![](base_r.png)
+
+Arayüz olarak temel R çok kullanışlı değildir. Bu durum her ne kadar göreceli olsa da, pratikte genellikle daha kullanışlı bir geliştirme ortamına ihtiyaç duyulmaktadır. [RStudio](https://posit.co/downloads/), temel R'a göre daha iyi bir arayüz sunduğu için tercih edilir. Web sayfasından indirilip, kurulum gerçekleştirildikten sonra kolaylıkla kullanılabilir.
+
+
+# RStudio Kullanımı
+
+[RStudio](), R ile entegre çalışan bir geliştirme ortamıdır. (1) Konsol, (2) Dosya dizini ve (3) Ortam olmak üzere üç temel panelden oluşur. Konsol, kodları çalıştırmak ve çıktıları elde etmek için kullanılır. Dosya dizini panelinde, çalışma ortamında yer alan dosyalara, oluşturulan grafik çıktılarına, yüklü paketlere erişim gibi bir çok işlemi yapabilmek mümkündür. Ortam panelinde oluşturulan nesne ve veriler takip edilebilir, hakkındaki özet bilgiler görüntülenir. 
+
+![](rstudio.png)
+
+
+2.panelde yer alan **Plots** sekmesinde, çizilen grafikler görüntülenip, istenilen ölçü ve dosya türünde dışarıya aktarılabilmektedir. Ayrıca 3.panelde yer alan **Import Dataset** butonu ile dış kaynaklı veriler bazı ön işlemleri de hızlıca gerçekleştirebilme seçeneğiyle R Studio ortamına aktarılabilir. Bu iki işlem gibi sürekli ihtiyaç duyulan işlemleri temel R ekranında gerçekleştirmek daha zahmetlidir.
+
+
+# Giriş kodları
+
+Bir nesne oluşturmak ve nesneye atamalar yapma için `=` ya da `<-` operatörlerini kullanabiliriz.
+
+```{r}
+a <- 5
+a
+```
+
+`a` nesnesine birden fazla değer atamak için `c()` fonksiyonundan yararlanırız. R'da herhangi bir metinsel ifadeden sonra parantez `()` kullanımı, bu ifadenin bir fonksiyon olduğunun göstergesidir.
+
+```{r}
+a <- c(1, 3, 5)
+a
+```
+
+Bir nesnenin boyutuna yani içerdiği gözlem değeri sayısını `length()` fonksinuyla hesaplayabiliriz.
+
+```{r}
+length(a)
+```
+
+Bir nesnede yer alan bir değeri çağırmak için ilgili değerin sırasını, nesnenin isminden sonra köşeli parantez `[]` içerisinde belirtmek yeterlidir.
+
+```{r}
+a[2] # a nesnesinde 2.sırada yer alan değerin çağırılması
+```
+
+Yukarıdaki örnekte gördüğünüz gibi diyez ya da hashtag işareti `#` kullanıldığı yerde sonrasında yer alan karakterleri *pasif* hale getirir. Bu özellik kodlara açıklama satırı eklemek için ya da belirli satırları çalıştırmamak için de kullanılabilir.
+
+```{r}
+a <- 5
+a <- c(a, 3)
+#a <- c(a, 2)
+a
+```
+
+# 1. Veri Tipleri 
+
+R programlama dilinde, nümerik (`numeric`), tam sayı (`integer`), karmaşık sayılar (`complex`), karakter (`character`) ve mantıksal (`logical`) olmak üzere 5 temel veri tipi bulunmaktadır. 
+
+
+## 1.1. Nümerik veri tipi
+
+Herhangi bir ondalık sayı ile ifade edilebilen veri tipidir. Bir insanın yaşı, boy uzunluğu veya kilosu nümerik veri tipine örnektir.
+
+```{r}
+# tek gözlemden oluşan nümerik tipte bir veri
+a <- 12.3 
+a
+class(a)
+
+# birden fazla gözlemden oluşan nümerik tipte bir veri
+a <- c(12, 5.4, 6.2, 11.7) 
+a
+
+```
+
+Veri tipini kontrol etmek için `class()` fonksiyonu kullanılır.
+
+
+## 1.2. Tam Sayı veri tipi
+
+Tam sayı değerler alan bir veriye ilişkin değerleri tanımlamak için kullanan veri tipidir. `as.integer()` fonksiyonu ile oluşturulur.
+
+```{r}
+a <- as.integer(5)
+a
+class(a)
+
+a <- as.integer(c(12, 5, 6, 8, 1))
+a
+class(a)
+```
+
+
+## 1.3. Karakter veri tipi
+
+Herhangi bir metin ile ifade edilen veri tipidir. Cinsiyet, herhangi bir cismin rengi bu tip değişkene örnektir. `as.character()` fonksiyonuyla ya da **çift tırnak** içerisinde yazılan ifadeler yardımıyla oluşturulabilir.
+
+```{r}
+a <- "Kadın"
+a
+class(a)
+
+a <- as.character(55)
+a
+class(a)
+```
+Bazı durumlarda nümerik değerler, bir verinin gözlem değerlerini birbirinden ayırt etmek için etiket olarak kullanımı gerekebilir. Bu gibi durumlarda `character` tipinde veriler oluşturulur.
+
+
+## 1.4. Mantıksal veri tipi
+
+Bir mantıksal veri tipi `TRUE` ve `FALSE` olmak üzere yalnızca iki değer alabilir. Bu tip veri genellikle karşılaştırma yapılmak istendiğinde kullanılır. Örneğin, `a` nesnesinin aldığı değer `b` nesnesinin aldığı değerden büyük müdür, gibi sorgulamalarda oldukça kullanışlıdır.
+
+```{r}
+a <- 10
+b <- 5 
+
+a > b
+5 > 10
+```
+
+Mantıksal veri tipi, tüm veri yapılarındaki sorgulamalar için oldukça kullanışlıdır. Çıktıları üzerinden sayma işlemleri ve oran hesapları kolaylıkla yapılabilir. Bu özelliğine ilişkin detaylı açıklamaları ilerleyen bölümlerde ele alacağız.
+
+
+# 2. Veri Yapıları
+
+vektör, faktör, matris, liste ve data frame olmak üzere 5 temel veri yapısı bulunmaktadır. 
+
+## 2.1. Vektör veri yapısı
+
+Vektörler, aynı tip verileri saklamak için kullanılırlar. 
+
+```{r}
+data <- c(1, 2, 3, 4, 5, 6)
+data
+```
+Atama sırasında farklı veri tipleri kullanılırsa, tüm değerleri aynı veri tipine dönüştürerek saklarlar.
+
+```{r}
+data <- c("a", "b", 1, 2, 3)
+data
+```
+
+
+## 2.2. Matris  veri yapısı
+
+Matris veri yapısı, iki boyutlu vektörlerden oluşan dikdörtgen formundadır. `matrix()` fonksiyonu ile oluşturulur. 
+
+```{r}
+matris <- matrix(c(1, 2, 3, 4, 5, 6), ncol = 2)
+matris
+```
+`matrix()` fonksiyonunu kullanırken iki argümanın girilmesi zorunludur. Bunlar, gözlem değerlerini içeren birinci argüman ve satır (`nrow`) ya da sütun (`ncol`) sayısını belirlemeye yarayan argümandır.
+
+Matris veri yapısında herhangi bir gözlem değerini çağırmak için, iki boyutlu yapıda olduğundan ilgili gözlemin satır ve sütun bilgilerinin girilmesi gereklidir.
+
+```{r}
+matris[2, 1] # matrisin 2.satır 1.sütununda yer alan gözlem değeri
+```
+
+Bir satır ya da bir sütunu çağırmak için diğer boyut bilgisinin boş bırakılması yeterlidir.
+
+```{r}
+matris[1,] # 1.satırdaki gözlem değerleri
+matris[,2] # 2.sütundaki gözlem değerleri
+```
+
+
+## 2.3. Faktör  veri yapısı
+
+İstatistiksel literatürde *kategorik* olarak adlandırılan, sınırlı sayıda kategoriden (düzeyden) oluşan verileri saklamak için kullanılır. Örneğin, cinsiyet, eğitim düzeyi, yaş grubu kategorik tipte verilerdir. 
+
+Bu tip verileri `factor()` fonksiyonunu kullanarak oluşturabiliriz. Burada öncelikle `c()` fonksiyonu ile bir vektör oluşturmamız gerektiğine dikkat ediniz.
+
+```{r}
+cinsiyet <- factor(c("Kadın", "Erkek", "Kadın", "Kadın", "Erkek"))
+cinsiyet
+```
+
+Kategorik verilerden oluşan bir vektörü daha sonra faktör tipine dönüştürmek için `as.factor()` fonksiyonu kullanılabilir. Aksi taktirde oluşturulan nesnenin *character* tipte kalacaktır.
+
+```{r}
+cinsiyet <- c("Kadın", "Erkek", "Kadın", "Kadın", "Erkek")
+cinsiyet
+class(cinsiyet)
+
+cinsiyet <- as.factor(cinsiyet)
+cinsiyet
+class(cinsiyet)
+```
+
+Sıralı kategorik veri oluşturmak için `factor()` fonksiyonu içerisindeki bazı argümanlarını kullanarak düzeyler arasındaki sıralamayı belirtmemiz gerekiyor.
+
+```{r}
+egitim_durumu <- factor(c("Ortaokul" ,"Lise", "Üniversite", "Ortaokul" ,
+                          "Lise", "Ortaokul" ,"Lise", "Üniversite", 
+                          "Üniversite"), 
+                        order = TRUE, 
+                        levels = c("Ortaokul" ,"Lise", "Üniversite"))
+egitim_durumu
+```
+
+Oluşan çıktıda düzeylerin (`Levels`) arasındaki sıralama ilişkisini görebilirsiniz. Bu sayede, sıralama esnasında yapılan bir hata kolaylıkla tespit edilebilir.
+
+Sıralı (*ordinal*) ya da sırasız (*nominal*) kategorik verilerde yer alan gözlem sıklıklarını `summary()` fonksiyonu ile görebiliriz.
+
+```{r}
+summary(cinsiyet)
+
+summary(egitim_durumu)
+```
+
+## 2.4. Data Frame veri yapısı
+
+Data frame'ler birden çok tipte veriyi saklamak için kullanılan veri yapılarıdır. Farklı tipte veri saklayabilme özellikleri ile matris yapısındaki verilerden ayrılırlar. Uygulamada en sık kullanılan veri yapısıdır. 
+
+`data.frame()` fonksiyonu ile oluşturulur. Her bir veriyi alıştığımız şekilde bu fonksiyon içerisinde tanımlayabiliriz. **Bu aşamada en sık yapılan hata, veriler arasına virgül koymanın unutulmasıdır.**
+
+```{r}
+veri_seti <- data.frame(yas      = c(21, 13, 42, 15),
+                        boy      = c(180, 142, 167, 159),
+                        cinsiyet = c("Kadın", "Kadın", "Erkek", "Erkek"))
+
+veri_seti
+```
+
+Data frame yapısındaki verilerin, aynı sayıda satırdan; yani her bir veri için eşit sayıda gözlemden oluşması gerekmektedir. 
+
+```{r, error = TRUE}
+veri_seti <- data.frame(yas      = c(21, 13, 42),
+                        boy      = c(180, 142, 167, 159),
+                        cinsiyet = c("Kadın", "Kadın", "Erkek", "Erkek"))
+```
+
+Çok sayıda satır (gözlem değeri) içeren bu yapıdaki verilerin yalnızca ilk satırlarını ekrana yazdırmak için `head()` fonksiyonu kullanılır. Bu fonksiyon, veriye hızlı bir bakış atmak ya da dış kaynaklı bir verinin doğru şekilde ortama aktarıldığından emin olmak olmak için kullanılabilir. Opsiyonel argümanıyla görülmek istenen satır sayısı değiştirilebilir.
+
+
+```{r}
+head(veri_seti, 2)
+```
+
+## 2.5. Tibble veri yapısı
+
+`tibble` en kısa tanımıyla `data.frame` veri yapısının modernize edilmiş halidir. Yıllar içerisinde kompleks data frame yapısı ile ilgili elde edilen tecrübe ve geri dönüşler ile bazı geliştirmeler yapılmış ve `{tidyverse}` meta-paketinde (birden fazla paket içeren yapı) alternatif olarak sunulmuştur.
+
+
+## 2.6. Liste veri yapısı
+
+Data frame ve tibble gibi farklı veri tiplerinin saklanabildiği veri yapılarıdır. Diğerlerinden ayırt eden özelliği ise her bir veri tipinde eşit sayıda gözlem olması zorunluluğunun bulunmamasıdır. Örneğin, üç gözlem değeri içeren `yas`, dörder gözlem değeri içeren `boy` ve `cinsiyet` değişkenlerini bu yapıdaki saklayabiliriz.
+
+```{r}
+veri_listesi <- list(yas      = c(21, 13, 42),
+                     boy      = c(180, 142, 167, 159),
+                     cinsiyet = c("Kadın", "Kadın", "Erkek", "Erkek"))
+
+veri_listesi
+```
+
+Liste yapısındaki veriden belirli gözlem değeri iki farklı yol ile çağrılabilir. Örneğin, listede yer alan `yas` değişkeninde yer alan 1.gözlem değerini çağıralım.
+
+```{r}
+veri_listesi$yas[1]
+```
+
+Aynı işlem aşağıdaki gibi de yapılabilir.
+
+```{r}
+veri_listesi[[1]][1]
+```
+
+Bu komutta ilk kullanılan çift köşeli parantez listenin 1.öğesini çağırmak, ikinci sırada tek kullanılan köşeli parantez ise ilgili öğenin istenilen sıradaki gözlem değerini çağırmak için kullanılmıştır.
+
+
+# 3. Operatörler
+
+Bu bölümde en sık kullanılan, aritmetik, ilişkisel ve mantıksal olmak üzere üç temel operatör grubu ele alınmıştır.
+
+## 3.1. Aritmetik Operatörler
+
+Toplama, çıkarma, çarpma ve benzeri temel matematiksel işlemleri gerçekleştirmek için kullanılan operatörlerdir.
+
+```{r}
+a <- 10 
+b <- 5
+
+a + b #toplama
+
+a - b #çıkarma
+
+a * b #çarpma
+
+a / b #bölme
+
+a ^ b #üs alma
+
+a %% b #mod alma
+```
+
+Yukarıdaki işlemler birden fazla gözlem içeren vektörler için de gerçekleştirilebilir. Matematiksel operatörler, sadece nesneler üzerinde kullanılmazlar.
+
+```{r}
+10 * 5
+10 / 5
+```
+
+
+## 2.2. İlişkisel Operatörler
+
+İki değeri veya değişkeni, birinin daha küçük, daha büyük olup olmadığı şeklinde karşılaştırmaları gerçekleştirmek veya eşit olup olmadığını sınamak için kullanılırlar.
+
+```{r}
+a <- 10
+b <- 5
+
+a < b  # a, b'den küçük mü?
+a > b  # a, b'den büyük mü?
+a >= b # a, b'den büyük ya da eşit mi?
+a <= b # a, b'den küçük ya da eşit mi?
+a == b  # a, b'ye eşit mi?
+a != b # a, b'den farklı mı?
+```
+
+İlişkisel operatörler `TRUE` ve `FALSE` olmak üzere iki değer döndürür. Bu özellik birden fazla gözlemden oluşan vektörler üzerinde işlem yaparken bazı fonksiyonlar yardımıyla detaylı sorgular yapılabilmesini sağlar. 
+
+Örneğin, `a` vektöründe (1) 10'dan büyük gözlem değerlerini belirleyelim, (2) toplam kaç tane gözlemin büyük olduğunu saydıralım ve (3) büyük olan gözlem değerlerinin tüm gözlem değerleri içerisindeki oran veya yüzdesini hesaplayalım.
+
+```{r}
+a <- c(1, 32, 7, 14, 2, 88, 42, 10, 9, 23, 45, 12, 94, 22)
+
+#(1)
+a > 10
+
+#(2)
+sum(a > 10)
+
+#(3)
+mean(a < 10)
+```
+
+İlişkisel operatörler ile yapılan sorgularda, operatörlerin döndürdüğü mantıksal `TRUE` değeri 1'e, `FALSE` değeri ise 0'a eşittir. Bu sayede bu çıktılar üzerinde toplama ve ortalama alma gibi işlemleri yapabiliriz.
+
+
+## 2.3. Mantıksal operatörler
+
+Bu operatörler veriler üzerinde "ve, veya, değil" gibi mantıksal sorgulamaları gerçekleştirebilmek için kullanılır.
+
+Örneğin, `a` ve `b` nesnelerinin tek bir sorgu ile pozitif değerlere sahip olup olmadığını araştıralım. Bunun için `&` sembolünü kullanırız.
+
+```{r}
+a <- 10 
+b <- 5
+
+a & b > 0
+```
+
+Bu nesnelerden herhangi birinin pozitif değerlere sahip olup olmadığını araştıralım. Bu tip bir "veya" sorgusu için `|` sembolünü kullanırız.
+
+```{r}
+a <- 10 
+b <- 5
+
+a | b > 0
+```
+
+Bu nesnelerden herhangi birinin ve her ikisinin de sıfırdan farklı olduğunu araştıralım. Bu tip bir "değil" sorgusu için `!` ve `=` sembollerini birlikte (aralarında boşluk bırakmadan) kullanırız.
+
+```{r}
+a <- 10 
+b <- 0
+
+a != 0
+b != 0
+a & b != 0
+```
+
+Mantıksal operatörden birden fazla koşul içeren sorgu ve işlemleri gerçekleştirebilmek için oldukça kullanışlıdırlar.
+
+
+# 3. Koşullar
+
+Bu bölümde `if`, `else if`, `else` yapıları ve bu yapıların daha pratik kullanımı olan `ifelse` yapısı ele alınmıştır.
+
+## 3.1. If Koşulu
+
+`if` fonksiyonu içerisinde yer alan koşul DOĞRU (`TRUE`) değerini alırsa, süslü parantez içerisinde ya da izleyen R kodu çalıştırılır.
+
+```{r}
+a <- 5
+
+if(a == 5){
+  a <- a ^ 2
+}
+a
+
+if(a == 5) a ^ 2
+```
+
+Eğer koşulun sağlanmadığı durumda farklı bir işlem yapılmak isteniyorsa, `else` bölümü eklenebilir.
+
+```{r}
+a <- 5
+
+if(a < 5){
+  a <- a ^ 2
+} else {a <- a ^ 3}
+
+a
+```
+
+Eğer aynı anda iki koşul ve bu iki koşulun da sağlanmadığı durumlarda farklı bir işlem yapılmak isteniyorsa `else if` bölümü kullanılır.
+
+```{r}
+a <- 5
+
+if(a < 5){
+  a <- a ^ 2
+  } else if (a > 5){
+  a <- a ^ 3
+  } else {a <- a ^ 4}
+
+a
+```
+
+`else if` sayısı arttırılarak istenilen kadar koşul sorgulanabilir. Bu yapıların yanı sıra aynı işlevi gören `ifelse()` fonksiyonu da oldukça kullanışlıdır. Bu fonksiyon üç argüman ile çalışır.
+
+```{r}
+a <- -2
+ifelse(a > 0, "a pozitiftir", "a negatiftir")
+```
+
+`if` koşul yapısına benzer olarak `ifelse()` içerisinde de birden fazla koşul sorgulanabilir. Bunun için koşulun sağlanmadığı durumda yapılacak işlem kısmını yeni bir `ifelse` yapısı yerleştirilebilir.
+
+```{r}
+a <- 0
+ifelse(a > 0, 
+       "a pozitiftir", 
+       ifelse(a == 0, "a sıfırdıır", "a negatiftir"))
+```
+
+`ifelse`, `if` koşuluna göre kullanımı daha kolaydır.
+
+
+# 4. Döngüler
+
+Bir döngü, bir kod bloğunu tekrarlı şekilde çalıştırmak için kullanılır. Bu istenilen sayıda, bir koşul sağlanana kadar ya da bir koşul sağlandığı sürece çalıştırma biçiminde olabilir.
+
+
+## 4.1. For döngüsü
+
+For döngüsü, istenilen sayıda tekrar ile kod bloğunu çalıştırmak için kullanılır.
+
+```{r}
+for (i in 1:3) {
+  print(i)
+  print(5)
+  }
+```
+
+`break` komutu for döngüsü içerisinde `if` koşulu ile birlikte kullanılabilir.
+
+```{r}
+a <- 5
+
+for (i in 1:5) {
+  print(a)
+  a <- a - 1
+  if(a < 3){break}
+  }
+```
+
+`next` komutunu da `if` koşulu ile birlikte döngüde istenilen adım ya da adımları atlamak için kullanılır.
+
+
+## 4.2. Repeat döngüsü
+
+Repeat döngüsü, döngüden çıkış koşulu sağlanana kadar bir kod bloğunu döngüsel olarak çalıştırmak için kullanılır.
+
+```{r}
+a <- 9
+
+repeat {
+  print(a)
+  a <- a-1
+  if(a < 1) {
+  break
+  }
+}
+```
+
+
+## 4.3. While döngüsü
+
+while döngüsü, koşul sağlandığı sürece bir kod bloğunu döngüsel olarak çalıştırmak için kullanılır.
+
+```{r}
+a <- 9
+
+while(a > 5) {
+  print(a)
+  a <- a-1
+  }
+```
+
+
+# 5. Fonksiyonlar
+
+Fonksiyonlar, belirli bir işlemi gerçekleştirmek için kullanılan ve yeniden kullanılabilen bir kod bloğudur. `function()` fonksiyonu kullanılarak bir fonksiyon  oluşturulabilir. Örneğin, bir vektördeki gözlemlerin varyansını hesaplayan bir fonksiyon aşağıdaki gibi oluşturulabilir.
+
+```{r}
+varyans_al <- function(a){
+  varyans <- sum((a - mean(a)) ^ 2) / (length(a) - 1)
+  return(varyans)
+}
+
+varyans_al(c(1, 2, 3, 4, 5))
+```
+
+Bu fonksiyon bir girdisi (`a`) ve bir çıktısı (`varyans`) olan bir fonksiyondur. Bir fonksiyon ile birden fazla çıktı üretmek için `list` veri tipini kullanabiliriz.
+
+```{r}
+varyans_al <- function(a){
+  varyans <- sum((a - mean(a)) ^ 2) / (length(a) - 1)
+  s_sapma <- sqrt(varyans)
+  return(list(varyans = varyans, s_sapma = s_sapma))
+}
+
+varyans_al(c(1, 2, 3, 4, 5))
+```
+
+Görüldüğü gibi `list` veri tipi içerisinde çıktılara istediğimiz ismi verebiliriz. Verdiğimiz isimler ile `fonksiyon$çıktı` yapısında bir komutla, ilgili fonksiyonun yalnızca bir çıktısını çağırabiliriz.
+
+```{r}
+varyans_al(c(1, 2, 3, 4, 5))$varyans
+```
+
+Fonksiyon çıktılarını bir nesnede saklayıp, hesaplamaları izleyen adımlarda tekrar tekrar kullanabiliriz.
+
+```{r}
+degiskenlik_olculeri <- varyans_al(c(1, 2, 3, 4, 5))
+degiskenlik_olculeri
+degiskenlik_olculeri$varyans
+degiskenlik_olculeri$s_sapma
+```
+Fonksiyonlar birden fazla çıktıdan oluştuğu gibi, birden fazla girdi ile de oluşturulabilirler. 
+
+```{r}
+varyans_karsilastir <- function(a, b){
+  varyans_a <- sum((a - mean(a)) ^ 2) / (length(a) - 1)
+  varyans_b <- sum((b - mean(b)) ^ 2) / (length(b) - 1)
+  ifelse(varyans_a == varyans_b, 
+         "varyansları eşittir!", 
+         "varyansları farklıdır!")
+}
+
+a <- c(1, 2, 3, 4, 5)
+b <- c(0.1, 0.2, 0.3, 0.4, 0.5)
+
+varyans_karsilastir(a, b)
+```
+
+Burada fonksiyon çıktısını oluşturmak için `return()` fonksiyonunu kullanılmaması dikkatinizi çekmiştir. R'da fonksiyon oluşturulurken, eğer `return()` fonksiyonu kullanılmazsa fonksiyonun son satırı çıktı olarak kullanılır.
+
+Fonksiyon yazarken dikkat edilmesi gereken önemli bir nokta, **halihazırda R'da kullanılan bir fonksiyon isminin kullanılmamasıdır.**
+
+
+# 6. İstatistiksel İşlemler
+
+R'da basit istatistiksel hesaplamalar kısa kodlar yardımıyla yapılabilmektedir. Örneğin `a` vektörünün merkezi eğilim ve değişkenlik ölçülerini hesaplayalım.
+
+```{r}
+a <- c(4, 6, 8, 2, 4, 8, 10)
+
+mean(a)   # a vektörünün ortalaması
+median(a) # a vektörünün medyanı
+var(a)    # a vektörünün varyansı
+sd(a)     # a vektörünün standart sapması
+```
+
+Bazı istatistikleri daha hızlı hesaplamak için `sumamry()` gibi daha kullanışlı fonksiyonlar bulunmaktadır. Bu fonksiyon ile bir vektörde yer alan değerlerin 6 istatistiği kolayca hesaplanabilmektedir.
+
+```{r}
+summary(a)
+```
+
+
+# Uygulama: FIFA23 veri seti
+
+Bu bölümde [Kaggle](https://www.kaggle.com/)'dan erişebilen [FIFA 23 Players](https://www.kaggle.com/datasets/1898257a1915cbd22dd226f16c66dc218dfb65fd6f062755f4d0243bb8365a99) veri seti kullanılacaktır. Veri setini indirmek için web sayfasında sağ üst köşede yer alan **Download** butonu kullanılır. 
+
+## Veri setinin R ortamına aktarılması
+
+Kaggle üzerinden indirilen .csv uzantılı veri dosyası, 3.panel üzerinde yer alan **Import Dataset** butonu ile R ortamına kolaylıkla aktarılabilir. Bu işlemi gerçekleştirmek için:
+
+1. Import Dataset butonuna tıklandıktan sonra açılan pencerede aktarmak istediğimiz veri dosyasının türü seçilir. Uygulama için .csv dosyası kullanacağımız için **From Text (readr)** seçeneği ile devam edeceğiz. 
+
+2. Açılan pencerede, sağ üst köşede bulunan **Browse** butonu ile aktarmak istenilen dosyanın bilgisayar üzerindeki konumunu seçmemiz gerekmektedir.
+
+3. Dosya seçiminden sonra, ekranda veri dosyasının içeriğinin bir ön gösterimi görüntülenecektir. Bu adımda veri aktarımı sırasında, ilk satırlarda yer alan değerlerin değişken ismi olarak kullanılması gibi bazı ön ayarları düzenleyebiliriz. 
+
+4. Ayarlar ile gerekli düzenlemeler sonrasında, **Import** butonu ile veriyi R ortamına aktarmış oluruz.
+
+![](import.png)
+
+Bu ekranda sol alt bölümde gerekli ayarların yapılmasına imkan veren bölüm, sağ alt kısmında ise veri aktarım işlemini gerçekleştirmek için kullanılan R kodları görülmektedir. Bu kodlar ile de veri aktarım işlemini gerçekleştirebiliriz. Özellikle hazırlanan kod dosyasının tekrar kullanılması gerektiği durumlarda kodlar üzerinden veri aktarım işleminin gerçekleştirilmesi daha kullanışlıdır.
+
+```{r, warning=FALSE, message=FALSE}
+library(readr)
+fifa <- read_csv("Fifa 23 Players Data.csv")
+```
+
+
+Veri aktarım işlemi sırasında en sık yapılan hatalardan biri, görselde yer alan verilerin düzenli (*tidy*) görüntüsü elde edilmeden bu işlemin tamamlanmasıdır. Bazı durumlarda veri dosyasında değerler virgül yerine noktalı virgül ya da bir boşluk bırakılarak ayrılmış olabilir. **Delimiter** seçiminin buna uygun yapılmaması, düzenli veri aktarımına engel olmaktadır. Bu hatanın bir örneği aşağıdaki görseldeki gibi ortaya çıkabilir.
+
+![](import_mistake.png)
+
+R'a kopyala-yapıştır yöntemiyle veri aktarımı yapabilmek için {datapasta} paketi, PDF formatındaki dosyalar üzerindeki verileri aktarmak için ise {tabulizer} paketi kullanılabilir. Paketler ve kullanım detayları ile ilgili [{datapasta} notlarıma](https://twitter.com/mustafa__cavus/status/1460358027685548041?s=20&t=d_HgUJYO_K2Ong6koeciug) ve [{tabulizer} notlarıma](https://twitter.com/mustafa__cavus/status/1459197660976529416) göz atabilirsiniz.
+
+
+## Veri seti üzerinde bazı temel sorgulamalar
+
+Öncelikle veri setinin yapısını sorgulayarak başlayalım:
+
+```{r}
+class(fifa)
+```
+
+Görüldüğü gibi veri seti **tibble** yani, modern **data.frame** yapısındadır. Veri setinin boyutunu görmek için ise **Environment** paneli ya da `dim()` fonsiyonu kullanılabilir.
+
+```{r}
+dim(fifa)
+```
+
+Fonksiyon çıktısına göre `fifa` veri seti, 18359 satırdan (futbolcudan) ve 89 sütundan (değişken, özellik) oluşmaktadır. Boyutun yanı sıra veri seti hakkında daha kapsamlı bilgi edinmek için R'da bazı hazır fonksiyonlar bulunmaktadır. Bunlardan biri de `glimpse()` fonksiyonudur.
+
+```{r, error=TRUE}
+glimpse(fifa)
+```
+
+Burada `glimpse()` fonksiyonunun tanımlanmamış olduğuna dair bir hata aldık. Bu fonksiyonda R'da varsayılan, yani kurulum sonrası gelen paketler içerisinde yer almıyor. Bu nedenle fonksiyonu kullanabilmek için öncelikle fonksiyonunun yer aldığı `{dplyr}` paketini yüklemek gerekiyor.
+
+```{r, warning=FALSE, message=FALSE}
+install.packages("dplyr")
+library(dplyr)
+```
+
+Paket yüklendikten sonra, `library()` fonksiyonuyla R ortamına çağrılması gerekiyor. Bu ikinci adım uygulanmadığı durumda, paket kurulmuş olmasına rağmen pakete bağlı fonksiyonlar çalıştırılamaz. Paket yüklendikten sonra `glimpse()` fonksiyonunu kullanabiliriz.
+
+```{r}
+glimpse(fifa)
+```
+
+Görüldüğü gibi veri setinde `double` (kısaca `dbl`) ve `character` (kısaca `chr`) tipinde olmak üzere iki grup veri bulunmaktadır. `numeric` veri tipi ile `double` veri tipi arasında bir fark yoktur. Burada `double` veri tipi görüntülüyor olmamızın sebebi bu veri setinin `tibble` yapısında olmasıdır. `tibble` ve `data.frame` yapıları arasındaki farklardan biri, `numeric` veri tipini saklama biçimleridir. Veri setindeki bazı değişkenlerin tiplerini `class()` fonksiyonu ile sorguladığımızda `numeric` yapıda olduklarını görürüz.
+
+```{r}
+class(fifa$`Best Position`)
+class(fifa$`Value(in Euro)`)
+```
+
+Burada `$` işaretinden sonra belirtilen değişken isimlerinin tek tırnak içerisinde yazılmış olduğunu dikatinizi çekmiştir. Bunun nedeni değişkenler isimlendirilirken birden fazla sözcük ve aralarında da boşluk kullanılmasıdır. Bu durum pratikte işimizi zorlaştırabilir.
+
+Veri, **tibble** yapısında olduğu için herhangi bir sütun ya da değişken/özelliği `$` ile çağırabiliriz.
+
+```{r}
+head(fifa$Nationality)
+```
+
+Sorgunun sonucunda çok uzun bir çıktı oluşmasını engellemek için `head()` fonksiyonunu kullanabiliriz. Görüldüğü gibi `fifa` veri setinde yer alan futbolcuların uluslarını kolaylıkla çağırabilir, bu sayede bu değişken üzerinde işlemler yapabiliriz. Örneğin, ilk 5 ulusu ve karşılık gelen gözlem frekanslarını hesaplamak için `table()` fonksiyonunu kullanabiliriz.
+
+```{r}
+head(table(fifa$Nationality))
+```
+Burada ilk 5 gözlem sorgulandığında, değişkenin kategorilerinin alfabetik sıraya göre görüntülendiğini unutmayınız. *En sık gözlenen gözlem değerlerini görüntülemek için veri üzerinde bazı ön işlemler yapmamız gerekmektedir. Bu konuyu eğtimin ikinci haftasındaki derste ele alıyor olacağız.*
+
+Veri seti üzerinde bir değişkenin belirli değerleri üzerinde bazı sorgulama işlemleri gerçekleştirelim. Örneğin, 20 yaşından (`Age`) küçük futbolcuların piyasa değerlerini (`Value(in Euro)`) çağıralım.
+
+```{r}
+head(fifa$`Value(in Euro)`[fifa$Age < 20], 10)
+```
+
+Burada yine çok sayıda çıktı görüntülememek için `head()` fonksiyonunu kullandık, yalnızca 10 gözlem değerini çağırmak için ikinci bir argüman olarak belirttik. 
+
+Çıktıda futbolcuların piyasa değerleri için aşina olmadığımız bir gösterim kullanıldığını görüyoruz. R çok basamaklı sayıların gösterimi için bilimsel gösterim denen, içerisinde `e+/-` ifadelerinin yer aldığı gösterim biçimini kullanır. Örneğin, `1.16e+08` ifadesi `1.16 x 10^8` değerine eşittir. Hesaplamalarda bu gösterim türü sorun çıkarmasa da, grafik çizimi ve tablo oluşturma işlemlerinde herkes tarafından anlaşılamaz oluşu bir problemdir.
+
+Bu sorunu çözmek için `options(scipen = 99)` kodu ile bilimsel gösterim kapatılabilir, `options(scipen = 0)` kodu ile de tekrar açılabilir.
+
+```{r}
+options(scipen = 99)
+head(fifa$`Value(in Euro)`[fifa$Age < 20], 10)
+```
+
+Örneğin, 20 yaşından küçük futbolcuların ortalama piyasa değerlerini hesaplayalım.
+
+```{r}
+mean(fifa$`Value(in Euro)`[fifa$Age < 20])
+```
+
+Görüldüğü gibi 20 yaş altındaki futbolcuların ortalama piyasa değeri 1,132.697 Euro'dur. Varyansını hesaplamak için `var()` fonksiyonu kullanılır.
+
+```{r}
+var(fifa$`Value(in Euro)`[fifa$Age < 20])
+```
+
+Birden fazla istatistiksel ölçüyü aynı anda hesaplamak için R'da oldukça kullanışlı fonksiyonlar bulunmaktadır. Bunlardan en sık kullanılan `summary()` fonksiyonudur.
+
+```{r}
+summary(fifa$`Value(in Euro)`[fifa$Age < 20])
+```
+
+Bu fonksiyon min, 1.kantil, medyan, ortalama, 3.kantil ve max değerlerini döndürür. 
+
+Köşeli parantez ile birden fazla koşulu aynı anda sorgulayabiliriz. Bunun için mantıksal operatörlerden yararlanılır. Örneğin, yaşı 20'den küçük Türk futbolcuların ortalama piyasa değerini hesaplayalım.
+
+```{r}
+mean(fifa$`Value(in Euro)`[fifa$Age < 20 & fifa$Nationality == "Turkey"])
+```
+
+Görüldüğü gibi 20 yaş altı Türk futbolcuların ortalama piyasa değeri 928.947 Euro'dur ve 20 yaş altı futbolcuların ortalama piyasa değerinin (1,132.697 Euro) altındadır.
+
+Bu oyuncuların yaş dağılımlarını görelim. Bunun için `hist()` fonksiyonu yardımıyla bir grafik oluşturabiliriz.
+
+```{r}
+hist(fifa$`Value(in Euro)`[fifa$Age < 20 & fifa$Nationality == "Turkey"])
+```
+
+Grafik eksenlerindeki değişken isimlerini değiştirerek ve başlık ekleyerek daha açıklayıcı bir görsel elde edebiliriz.
+
+```{r}
+hist(fifa$`Value(in Euro)`[fifa$Age < 20 & fifa$Nationality == "Turkey"],
+     xlab = "Piyasa değeri",
+     ylab = "Frekans",
+     main = "20 Yaş Altı Türk Futbolcuların Piyasa Değerleri")
+```
+
+# İletişim
+
+Mustafa Çavuş, Eskişehir Teknik Üniversitesi, İstatistik Bölümü
+
+
+E-posta:    [mustafacavus@eskisehir.edu.tr](mustafacavus@eskisehir.edu.tr)
+
+LinkedIn:   [https://www.linkedin.com/in/mustafacavusphd/](https://www.linkedin.com/in/mustafacavusphd/)
+
+Twitter:    [https://twitter.com/mustafa__cavus](https://twitter.com/mustafa__cavus)
