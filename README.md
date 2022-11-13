@@ -3,7 +3,7 @@
 
 # Kaynakları nasıl indirebilirim?
 
-1. Yukarıda yer alan `<>Code` butonuna tıklayınız. 
+1. Yukarıda yer alan yeşil renkli `<>Code` butonuna tıklayınız. 
 
 2. Açılan pencerede en altta bulunan `Download ZIP` butonuyla tüm dosyaları indiriniz.
 
