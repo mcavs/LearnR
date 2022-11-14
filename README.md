@@ -14,7 +14,9 @@
 Yukarıdaki programda belirtilen gün ve saatlerde Zoom üzerinden canlı olarak yapılacaktır. Tüm eğitimlere erişim için aşağıdaki bilgileri kullanabilirsiniz:
 
 Zoom: [https://t.co/NFvOIVoQiw](https://t.co/NFvOIVoQiw)
+
 Meeting ID: 970 3746 8167
+
 Passcode: 576960
 
 
