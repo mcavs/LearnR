@@ -9,7 +9,7 @@
 4. Shiny ile Arayüz Tasarımı - 19 Aralık Pazartesi ([@ugurdar](https://github.com/ugurdar))
 
 
-# Kaynakları nasıl indirebilirim?
+## Eğitim süresince kullanılan kaynaklara nasıl ulaşabilirim?
 
 1. Yukarıda yer alan yeşil renkli `<>Code` butonuna tıklayınız. 
 
