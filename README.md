@@ -9,6 +9,17 @@
 4. Shiny ile Arayüz Tasarımı - 19 Aralık Pazartesi ([@ugurdar](https://github.com/ugurdar))
 
 
+## Eğitim Platformu
+
+Yukarıdaki programda belirtilen gün ve saatlerde Zoom üzerinden canlı olarak yapılacaktır. Tüm eğitimlere erişim için aşağıdaki bilgileri kullanabilirsiniz:
+
+Zoom: [https://t.co/NFvOIVoQiw](https://t.co/NFvOIVoQiw)
+
+Meeting ID: 970 3746 8167
+
+Passcode: 576960
+
+
 ## Eğitim süresince kullanılan kaynaklara nasıl ulaşabilirim?
 
 1. Yukarıda yer alan yeşil renkli `<>Code` butonuna tıklayınız. 
