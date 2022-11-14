@@ -11,7 +11,7 @@
 
 ## Eğitim Platformu
 
-Yukarıdaki programda belirtilen gün ve saatlerde Zoom üzerinden canlı olarak yapılacaktır. Tüm eğitimlere erişim için aşağıdaki bilgileri kullanabilirsiniz:
+Yukarıdaki programda belirtilen gün ve saatlerde Zoom üzerinden canlı olarak yapılacaktır. Zoom oturumuna erişim için aşağıdaki bağlantıyı kullanabilirsiniz:
 
 Zoom: [https://t.co/NFvOIVoQiw](https://t.co/NFvOIVoQiw)
 
