@@ -1,7 +1,7 @@
 # LearnR
 13 Kasım - 19 Aralık 2022 tarihleri arasında ESTÜ Veri Bilimi Kulübü ([@estuveribilimi](https://github.com/estuveribilimi)) ve Eskisehir R Users ([@EskisehirRUsers](https://github.com/EskisehirRUsers)) ortaklığında gerçekleştirilen R eğitimi öğrenme kaynaklarını içerir.
 
-##Eğitim programı:
+## Eğitim programı:
 
 1. R Programlamaya Giriş - 13 Kasım Pazar, 20:00-22:00 ([@mcavs](https://github.com/mcavs))
 2. {dplyr} ile Veri Manipülasyonu - 26 Kasım Cumartesi, 20:00 - 22:00 ([@mcavs](https://github.com/mcavs))
