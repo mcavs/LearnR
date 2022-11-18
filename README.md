@@ -31,6 +31,6 @@ Passcode: 576960
 
 ## Teşekkür
 
-Organizasyon için ESTÜ Veri Bilimi Kulübü ([@estuveribilimi](https://github.com/estuveribilimi))'nden [@Gizemaltun](https://github.com/Gizemaltun), [seymagnn](https://github.com/seymagnn) ve [zeynepszr](https://github.com/zeynepszr)'e teşekkürler!
+Organizasyon için ESTÜ Veri Bilimi Kulübü ([@estuveribilimi](https://github.com/estuveribilimi))'nden [@Gizemaltun](https://github.com/Gizemaltun), [@seymagnn](https://github.com/seymagnn) ve [@zeynepszr](https://github.com/zeynepszr)'e teşekkürler!
 
 
