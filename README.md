@@ -26,7 +26,7 @@ Passcode: 576960
 
 2. Açılan pencerede en altta bulunan `Download ZIP` butonuyla tüm dosyaları indiriniz.
 
-3. 1.hafta kullanılan materyallere erişmek için indirdiğiniz dosyada yer alan ilgili klasördeki `Rpg.html` dosyasını açınız.
+3. Ders materyallerine erişmek için indirdiğiniz dosyada yer alan `.html` uzantılı dosyayı açınız.
 
 
 ## Teşekkür
