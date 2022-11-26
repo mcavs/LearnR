@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mustafa Çavuş, Ph.D.">
+
+<title>rvm</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="Rvm_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Rvm_files/libs/quarto-html/quarto.js"></script>
+<script src="Rvm_files/libs/quarto-html/popper.min.js"></script>
+<script src="Rvm_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Rvm_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Rvm_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Rvm_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Rvm_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Rvm_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Rvm_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+<p><img src="banner.png" class="img-fluid"></p>
+<section id="giriş" class="level1">
+<h1>Giriş</h1>
+<div align="justify">
+<p>Veri görselleştirme, analiz etme ve modelleme gibi temel uygulamaların <strong>en uzun</strong> ve <strong>zorlu süreci</strong>, yapılandırılmış ya da yapılandırılmamış veriyi hazır hale getirmek için gerekli (ön) işlemlerin gerçekleştirilmesinden oluşan <strong>veri (ön) işleme sürecidir</strong>.</p>
+<p>Bu süreçte, farklı veri kaynaklarından elde edilen düzenli olmayan, yapılandırılmamış veri üzerinde yapılması gereken işlemler, veri ön işlemleri; düzenli, yapılandırılmış veriler üzerinde bir sonraki adıma hazır hali getirmek üzere yapılan işlemler ise veri işlemleri olarak adlandırılır.</p>
+<p>Tüm bu işlemler, temel (<em>base</em>) R’da yer alan fonksiyonlar yardımıyla gerçekleştirilebilir. Ancak bu fonksiyonların daha kullanışlı versiyonları, R kullanıcılarının <strong>alet seti</strong> olarak da betimlenen, <code>{dplyr}</code> paketinde sunulmaktadır. Bu eğitimde, öncelikle düzenli (<em>tidy</em>) veri yapısı tanıtılacak ve sonrasında ise veri (ön) işleme adımlarında kullanılan <code>{dplyr}</code> ve <code>{tidyr}</code> fonksiyonlarının temel işlevleri ve uygulamaları ele alınacaktır.</p>
+</div></section>
+<section id="düzenli-tidy-veri-yapısı" class="level1">
+<h1>1. Düzenli (<em>Tidy</em>) Veri Yapısı</h1>
+<div align="justify">
+<p>Tidy veri seti yapısında, her bir sütuna bir değişkeni, her bir satıra ise bir gözlem şeklinde yerleştirilmiştir.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="tidy_veri.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>Yukarıdaki tidy veri yapısında her bir hücre, bir gözlem birimini temsil eder. Bu tür yapıdaki oluşturulan ve/veya kullanılan bir veri seti üzerinde bir çok karmaşık sorgu işlemini yapabilmek için R’da kullanışlı paketler ve fonksiyonlar bulunmaktadır.</p>
+</div></section>
+<section id="veri-manipülasyonu" class="level1">
+<h1>2. Veri Manipülasyonu</h1>
+<div align="justify">
+<p>Veri manipülasyonu (işleme), veri setini analiz için hazırladığımız bir süreçtir. Veriyi ayıklama (filtreleme), özetleme, yeni değişkenler oluşturma gibi adımlar içerir.</p>
+</div></section>
+<section id="dplyr-paketi" class="level1">
+<h1>3. <code>{dplyr}</code> paketi</h1>
+<div align="justify">
+<p><code>{dplyr}</code> paketi tidy veri yapısı üzerinde işlem yapabilmek için kullanışlı fonksiyonları içeren bir pakettir. R’da yer alan temel fonksiyonlara göre daha hızlı ve efektif şekilde çalışırlar. Veri görselleştirme başta olmak üzere, bir çok paket içeren <code>{tidyverse}</code> meta-paket ailesinin bir parçasıdır. Bu özellik, <code>{dplyr}</code> paketinin diğer paketler ile uyum içerisinde çalışabilmeyi sağlar.</p>
+<table class="table">
+<caption>Tablo 1: Bazı <code>{dplyr}</code> fonksiyonlarının temel R’daki karşılıkları</caption>
+<thead>
+<tr class="header">
+<th>temel R</th>
+<th><code>{dplyr}</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>df[c("x", "y")]</code> veya <code>subset()</code></td>
+<td><code>select()</code></td>
+</tr>
+<tr class="even">
+<td><code>df[which(x), , drop = FALSE]</code> veya <code>subset()</code></td>
+<td><code>filter()</code></td>
+</tr>
+<tr class="odd">
+<td><code>df[order(x), , drop = FALSE]</code></td>
+<td><code>arrange()</code></td>
+</tr>
+<tr class="even">
+<td><code>mean(df$x), tapply(), aggregate(), by()</code></td>
+<td><code>summarise()</code></td>
+</tr>
+<tr class="odd">
+<td><code>df$z &lt;- df$x + df$y</code> veya <code>transform()</code></td>
+<td><code>mutate()</code></td>
+</tr>
+</tbody>
+</table>
+</div></section>
+<section id="dplyr-ve-sql" class="level1">
+<h1>4. <code>{dplyr}</code> ve SQL</h1>
+<div align="justify">
+<p>SQL veri analizi için kullanılan en eski dillerden biridir. Ancak SQL veri analizi yapmak için değil, verileri sorgulamak ve özetlemek için tasarlanmıştır. SQL, çok sayıda değişken üzerinde veri analiz sürecinde ihtiyaç duyulan tüm işlemleri yapmak için elverişli değildir. <code>{dplyr}</code>, <code>{numpy}</code> ve <code>{pandas}</code> gibi paketler bu konuda daha kullanışlıdırlar. Yine de, R, Python, SAS gibi modern veri analizi için kullanılan programlama dilleri ve yazılımları, SQL komutlarını destekler.</p>
+<p><code>{dplyr}</code> paketinin sağladığı fonksiyonların karşılık geldiği SQL fonksiyonları Tablo 1’de verilmiştir.</p>
+<div id="tbl-letters" class="anchored">
+<table class="table">
+<caption>Table&nbsp;1: Tablo 1: <code>{dplyr}</code> ve SQL fonksiyonlarının eşdeğerleri</caption>
+<thead>
+<tr class="header">
+<th><code>{dplyr}</code></th>
+<th>SQL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>select()</code></td>
+<td><code>SELECT</code></td>
+</tr>
+<tr class="even">
+<td><code>filter()</code></td>
+<td><code>WHERE</code></td>
+</tr>
+<tr class="odd">
+<td><code>group_by()</code></td>
+<td><code>GROUP BY</code></td>
+</tr>
+<tr class="even">
+<td><code>arrange()</code></td>
+<td><code>ORDER BY</code></td>
+</tr>
+<tr class="odd">
+<td><code>join()</code></td>
+<td><code>JOIN</code></td>
+</tr>
+<tr class="even">
+<td><code>mutate()</code></td>
+<td><code>COLUMN ALIAS</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></section>
+<section id="temel-dplyr-fonksiyonları" class="level1">
+<h1>5. Temel <code>{dplyr}</code> fonksiyonları</h1>
+<div align="justify">
+<p><code>summarise()</code>, <code>filter()</code>, <code>select()</code>, ve <code>mutate()</code> başta olmak üzere bir çok fonksiyon sunmaktadır. Bu bölümde en sık kullanılan bu dört fonksiyonu ele alacağız.</p>
+<p>Öncelikle <code>{dplyr}</code> paketini yükleyip, çağıralım:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="select-fonksiyonu" class="level2">
+<h2 class="anchored" data-anchor-id="select-fonksiyonu">5.1. <code>select()</code> fonksiyonu</h2>
+<div align="justify">
+<p>Veri setinde istenilen sütunları (değişkenleri) seçmek için kullanılır.</p>
+<p><img src="select.png" class="img-fluid"></p>
+<div align="justify">
+<p>Kaggle’da yer alan 1993 yılından günümüze kadar oynanan tüm uluslararası futbol maçlarına ilişkin değişkenleri içeren veri setini kullanalım. Verisetini bağlantı üzerinden indirebilirsiniz: <a href="">https://www.kaggle.com/datasets/brenda89/fifa-world-cup-2022</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>worldcup <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"international_matches.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(worldcup)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [23,921 × 25] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ date                         : Date[1:23921], format: "1993-08-08" "1993-08-08" ...
+ $ home_team                    : chr [1:23921] "Bolivia" "Brazil" "Ecuador" "Guinea" ...
+ $ away_team                    : chr [1:23921] "Uruguay" "Mexico" "Venezuela" "Sierra Leone" ...
+ $ home_team_continent          : chr [1:23921] "South America" "South America" "South America" "Africa" ...
+ $ away_team_continent          : chr [1:23921] "South America" "North America" "South America" "Africa" ...
+ $ home_team_fifa_rank          : num [1:23921] 59 8 35 65 67 70 50 65 111 4 ...
+ $ away_team_fifa_rank          : num [1:23921] 22 14 94 86 5 19 102 86 9 3 ...
+ $ home_team_total_fifa_points  : num [1:23921] 0 0 0 0 0 0 0 0 0 0 ...
+ $ away_team_total_fifa_points  : num [1:23921] 0 0 0 0 0 0 0 0 0 0 ...
+ $ home_team_score              : num [1:23921] 3 1 5 1 1 0 2 4 0 1 ...
+ $ away_team_score              : num [1:23921] 1 1 0 0 3 1 0 0 7 2 ...
+ $ tournament                   : chr [1:23921] "FIFA World Cup qualification" "Friendly" "FIFA World Cup qualification" "Friendly" ...
+ $ city                         : chr [1:23921] "La Paz" "Maceió" "Quito" "Conakry" ...
+ $ country                      : chr [1:23921] "Bolivia" "Brazil" "Ecuador" "Guinea" ...
+ $ neutral_location             : logi [1:23921] FALSE FALSE FALSE FALSE FALSE FALSE ...
+ $ shoot_out                    : chr [1:23921] "No" "No" "No" "No" ...
+ $ home_team_result             : chr [1:23921] "Win" "Draw" "Win" "Win" ...
+ $ home_team_goalkeeper_score   : num [1:23921] NA NA NA NA NA NA NA NA NA NA ...
+ $ away_team_goalkeeper_score   : num [1:23921] NA NA NA NA NA NA NA NA NA NA ...
+ $ home_team_mean_defense_score : num [1:23921] NA NA NA NA NA NA NA NA NA NA ...
+ $ home_team_mean_offense_score : num [1:23921] NA NA NA NA NA NA NA NA NA NA ...
+ $ home_team_mean_midfield_score: num [1:23921] NA NA NA NA NA NA NA NA NA NA ...
+ $ away_team_mean_defense_score : num [1:23921] NA NA NA NA NA NA NA NA NA NA ...
+ $ away_team_mean_offense_score : num [1:23921] NA NA NA NA NA NA NA NA NA NA ...
+ $ away_team_mean_midfield_score: num [1:23921] NA NA NA NA NA NA NA NA NA NA ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   date = col_date(format = ""),
+  ..   home_team = col_character(),
+  ..   away_team = col_character(),
+  ..   home_team_continent = col_character(),
+  ..   away_team_continent = col_character(),
+  ..   home_team_fifa_rank = col_double(),
+  ..   away_team_fifa_rank = col_double(),
+  ..   home_team_total_fifa_points = col_double(),
+  ..   away_team_total_fifa_points = col_double(),
+  ..   home_team_score = col_double(),
+  ..   away_team_score = col_double(),
+  ..   tournament = col_character(),
+  ..   city = col_character(),
+  ..   country = col_character(),
+  ..   neutral_location = col_logical(),
+  ..   shoot_out = col_character(),
+  ..   home_team_result = col_character(),
+  ..   home_team_goalkeeper_score = col_double(),
+  ..   away_team_goalkeeper_score = col_double(),
+  ..   home_team_mean_defense_score = col_double(),
+  ..   home_team_mean_offense_score = col_double(),
+  ..   home_team_mean_midfield_score = col_double(),
+  ..   away_team_mean_defense_score = col_double(),
+  ..   away_team_mean_offense_score = col_double(),
+  ..   away_team_mean_midfield_score = col_double()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Bu veriseti, 1993 yılından bugüne kadar oynanan tüm uluslararası futbol maçlarına ilişkin bilgilerin yanı sıra, her takımın gücü, gerçek FIFA sıralamalarını, EA Sport FIFA video oyununa dayalı oyuncu güçlerine ilişkin verileri içermektedir.</p>
+<p>Veriseti üzerinde <code>select()</code> fonksiyonu ile bir kaç özetleme uygulaması yapalım.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(worldcup, tournament)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 23,921 × 1
+   tournament                  
+   &lt;chr&gt;                       
+ 1 FIFA World Cup qualification
+ 2 Friendly                    
+ 3 FIFA World Cup qualification
+ 4 Friendly                    
+ 5 FIFA World Cup qualification
+ 6 FIFA World Cup qualification
+ 7 Friendly                    
+ 8 Friendly                    
+ 9 Friendly                    
+10 Friendly                    
+# … with 23,911 more rows</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Bir veya bir kaç değişken dışında geri kalan tüm değişkenleri seçmek için aşağıdaki kod kullanılır.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># city değişkeni (sütunu) hariç diğer değişkenlerin seçimi</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(worldcup, <span class="sc">-</span>city)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 23,921 × 24
+   date       home_team  away_…¹ home_…² away_…³ home_…⁴ away_…⁵ home_…⁶ away_…⁷
+   &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 1993-08-08 Bolivia    Uruguay South … South …      59      22       0       0
+ 2 1993-08-08 Brazil     Mexico  South … North …       8      14       0       0
+ 3 1993-08-08 Ecuador    Venezu… South … South …      35      94       0       0
+ 4 1993-08-08 Guinea     Sierra… Africa  Africa       65      86       0       0
+ 5 1993-08-08 Paraguay   Argent… South … South …      67       5       0       0
+ 6 1993-08-08 Peru       Colomb… South … South …      70      19       0       0
+ 7 1993-08-08 Zimbabwe   Eswati… Africa  Africa       50     102       0       0
+ 8 1993-08-09 Guinea     Sierra… Africa  Africa       65      86       0       0
+ 9 1993-08-11 Faroe Isl… Norway  Europe  Europe      111       9       0       0
+10 1993-08-11 Sweden     Switze… Europe  Europe        4       3       0       0
+# … with 23,911 more rows, 15 more variables: home_team_score &lt;dbl&gt;,
+#   away_team_score &lt;dbl&gt;, tournament &lt;chr&gt;, country &lt;chr&gt;,
+#   neutral_location &lt;lgl&gt;, shoot_out &lt;chr&gt;, home_team_result &lt;chr&gt;,
+#   home_team_goalkeeper_score &lt;dbl&gt;, away_team_goalkeeper_score &lt;dbl&gt;,
+#   home_team_mean_defense_score &lt;dbl&gt;, home_team_mean_offense_score &lt;dbl&gt;,
+#   home_team_mean_midfield_score &lt;dbl&gt;, away_team_mean_defense_score &lt;dbl&gt;,
+#   away_team_mean_offense_score &lt;dbl&gt;, away_team_mean_midfield_score &lt;dbl&gt;, …</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># city ve date değişkeni (sütunu) hariç diğer değişkenlerin seçimi</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(worldcup, <span class="sc">-</span><span class="fu">c</span>(date, city))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 23,921 × 23
+   home_team     away_…¹ home_…² away_…³ home_…⁴ away_…⁵ home_…⁶ away_…⁷ home_…⁸
+   &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Bolivia       Uruguay South … South …      59      22       0       0       3
+ 2 Brazil        Mexico  South … North …       8      14       0       0       1
+ 3 Ecuador       Venezu… South … South …      35      94       0       0       5
+ 4 Guinea        Sierra… Africa  Africa       65      86       0       0       1
+ 5 Paraguay      Argent… South … South …      67       5       0       0       1
+ 6 Peru          Colomb… South … South …      70      19       0       0       0
+ 7 Zimbabwe      Eswati… Africa  Africa       50     102       0       0       2
+ 8 Guinea        Sierra… Africa  Africa       65      86       0       0       4
+ 9 Faroe Islands Norway  Europe  Europe      111       9       0       0       0
+10 Sweden        Switze… Europe  Europe        4       3       0       0       1
+# … with 23,911 more rows, 14 more variables: away_team_score &lt;dbl&gt;,
+#   tournament &lt;chr&gt;, country &lt;chr&gt;, neutral_location &lt;lgl&gt;, shoot_out &lt;chr&gt;,
+#   home_team_result &lt;chr&gt;, home_team_goalkeeper_score &lt;dbl&gt;,
+#   away_team_goalkeeper_score &lt;dbl&gt;, home_team_mean_defense_score &lt;dbl&gt;,
+#   home_team_mean_offense_score &lt;dbl&gt;, home_team_mean_midfield_score &lt;dbl&gt;,
+#   away_team_mean_defense_score &lt;dbl&gt;, away_team_mean_offense_score &lt;dbl&gt;,
+#   away_team_mean_midfield_score &lt;dbl&gt;, and abbreviated variable names …</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Bir metinsel ifade içeren tüm değişkenleri seçmek için <code>contains()</code> fonksiyonu kullanılabilir.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(worldcup, <span class="fu">contains</span>(<span class="st">"fifa"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 23,921 × 4
+   home_team_fifa_rank away_team_fifa_rank home_team_total_fifa_points away_te…¹
+                 &lt;dbl&gt;               &lt;dbl&gt;                       &lt;dbl&gt;     &lt;dbl&gt;
+ 1                  59                  22                           0         0
+ 2                   8                  14                           0         0
+ 3                  35                  94                           0         0
+ 4                  65                  86                           0         0
+ 5                  67                   5                           0         0
+ 6                  70                  19                           0         0
+ 7                  50                 102                           0         0
+ 8                  65                  86                           0         0
+ 9                 111                   9                           0         0
+10                   4                   3                           0         0
+# … with 23,911 more rows, and abbreviated variable name
+#   ¹​away_team_total_fifa_points</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Bir metinsel ifade ile başlayan tüm değişkenleri seçmek için <code>starts_with()</code> fonksiyonu, biten tüm değişkenleri seçmek için ise <code>ends_with()</code> fonksiyonu kullanılır.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(worldcup, <span class="fu">starts_with</span>(<span class="st">"home_team"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 23,921 × 10
+   home_team     home_…¹ home_…² home_…³ home_…⁴ home_…⁵ home_…⁶ home_…⁷ home_…⁸
+   &lt;chr&gt;         &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Bolivia       South …      59       0       3 Win          NA      NA      NA
+ 2 Brazil        South …       8       0       1 Draw         NA      NA      NA
+ 3 Ecuador       South …      35       0       5 Win          NA      NA      NA
+ 4 Guinea        Africa       65       0       1 Win          NA      NA      NA
+ 5 Paraguay      South …      67       0       1 Lose         NA      NA      NA
+ 6 Peru          South …      70       0       0 Lose         NA      NA      NA
+ 7 Zimbabwe      Africa       50       0       2 Win          NA      NA      NA
+ 8 Guinea        Africa       65       0       4 Win          NA      NA      NA
+ 9 Faroe Islands Europe      111       0       0 Lose         NA      NA      NA
+10 Sweden        Europe        4       0       1 Lose         NA      NA      NA
+# … with 23,911 more rows, 1 more variable:
+#   home_team_mean_midfield_score &lt;dbl&gt;, and abbreviated variable names
+#   ¹​home_team_continent, ²​home_team_fifa_rank, ³​home_team_total_fifa_points,
+#   ⁴​home_team_score, ⁵​home_team_result, ⁶​home_team_goalkeeper_score,
+#   ⁷​home_team_mean_defense_score, ⁸​home_team_mean_offense_score</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>İlk üç sırada yer alan değişkenleri ya da belirli sıralarda yer alan değişkenleri seçmek için ise yol tercih edilebilir.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># İlk üç sıradaki değişkeni seçme işlemi</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(worldcup, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 23,921 × 3
+   date       home_team     away_team   
+   &lt;date&gt;     &lt;chr&gt;         &lt;chr&gt;       
+ 1 1993-08-08 Bolivia       Uruguay     
+ 2 1993-08-08 Brazil        Mexico      
+ 3 1993-08-08 Ecuador       Venezuela   
+ 4 1993-08-08 Guinea        Sierra Leone
+ 5 1993-08-08 Paraguay      Argentina   
+ 6 1993-08-08 Peru          Colombia    
+ 7 1993-08-08 Zimbabwe      Eswatini    
+ 8 1993-08-09 Guinea        Sierra Leone
+ 9 1993-08-11 Faroe Islands Norway      
+10 1993-08-11 Sweden        Switzerland 
+# … with 23,911 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2, 3, ve 7.sıralardaki değişkenleri seçme işlemi</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(worldcup, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 23,921 × 3
+   home_team     away_team    away_team_fifa_rank
+   &lt;chr&gt;         &lt;chr&gt;                      &lt;dbl&gt;
+ 1 Bolivia       Uruguay                       22
+ 2 Brazil        Mexico                        14
+ 3 Ecuador       Venezuela                     94
+ 4 Guinea        Sierra Leone                  86
+ 5 Paraguay      Argentina                      5
+ 6 Peru          Colombia                      19
+ 7 Zimbabwe      Eswatini                     102
+ 8 Guinea        Sierra Leone                  86
+ 9 Faroe Islands Norway                         9
+10 Sweden        Switzerland                    3
+# … with 23,911 more rows</code></pre>
+</div>
+</div>
+</div></div></div></div></div></div></div></section>
+<section id="filter-fonksiyonu" class="level2">
+<h2 class="anchored" data-anchor-id="filter-fonksiyonu">5.2. <code>filter()</code> fonksiyonu</h2>
+<div align="justify">
+<p>Veri setinde istenilen ya da belirli koşulları sağlayan satırları (gözlem değerleri) seçmek, filtrelemek için kullanılır.</p>
+<p><img src="filter.png" class="img-fluid"></p>
+<p>Veriseti üzerinde <code>filter()</code> fonksiyonu ile bir kaç özetleme uygulaması yapalım.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Türkiye'nin ev sahibi olarak oynadığı maçları filtreleme işlemi</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(worldcup, home_team <span class="sc">==</span> <span class="st">"Turkey"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 156 × 25
+   date       home_team away_t…¹ home_…² away_…³ home_…⁴ away_…⁵ home_…⁶ away_…⁷
+   &lt;date&gt;     &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 1993-10-27 Turkey    Poland   Europe  Europe       67      23       0       0
+ 2 1993-11-10 Turkey    Norway   Europe  Europe       67       2       0       0
+ 3 1994-04-20 Turkey    Russia   Europe  Europe       57      12       0       0
+ 4 1994-10-12 Turkey    Iceland  Europe  Europe       39      37       0       0
+ 5 1994-12-14 Turkey    Switzer… Europe  Europe       48       7       0       0
+ 6 1995-02-15 Turkey    Romania  Europe  Europe       48      11       0       0
+ 7 1995-03-08 Turkey    Israel   Europe  Europe       49      40       0       0
+ 8 1995-03-29 Turkey    Sweden   Europe  Europe       49       4       0       0
+ 9 1995-08-30 Turkey    North M… Europe  Europe       31      99       0       0
+10 1995-09-06 Turkey    Hungary  Europe  Europe       31      61       0       0
+# … with 146 more rows, 16 more variables: home_team_score &lt;dbl&gt;,
+#   away_team_score &lt;dbl&gt;, tournament &lt;chr&gt;, city &lt;chr&gt;, country &lt;chr&gt;,
+#   neutral_location &lt;lgl&gt;, shoot_out &lt;chr&gt;, home_team_result &lt;chr&gt;,
+#   home_team_goalkeeper_score &lt;dbl&gt;, away_team_goalkeeper_score &lt;dbl&gt;,
+#   home_team_mean_defense_score &lt;dbl&gt;, home_team_mean_offense_score &lt;dbl&gt;,
+#   home_team_mean_midfield_score &lt;dbl&gt;, away_team_mean_defense_score &lt;dbl&gt;,
+#   away_team_mean_offense_score &lt;dbl&gt;, away_team_mean_midfield_score &lt;dbl&gt;, …</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ev sahibi takımın üçten fazla gol attığı maçları filtreleme işlemi</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(worldcup, home_team_score <span class="sc">&gt;</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,543 × 25
+   date       home_team  away_…¹ home_…² away_…³ home_…⁴ away_…⁵ home_…⁶ away_…⁷
+   &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 1993-08-08 Ecuador    Venezu… South … South …      35      94       0       0
+ 2 1993-08-09 Guinea     Sierra… Africa  Africa       65      86       0       0
+ 3 1993-08-22 Bolivia    Venezu… South … South …      59      94       0       0
+ 4 1993-08-25 Denmark    Lithua… Europe  Europe       10      84       0       0
+ 5 1993-08-29 Brazil     Bolivia South … South …       8      59       0       0
+ 6 1993-08-29 Colombia   Peru    South … South …      19      70       0       0
+ 7 1993-08-29 Uruguay    Venezu… South … South …      22      94       0       0
+ 8 1993-09-05 Brazil     Venezu… South … South …       8      94       0       0
+ 9 1993-09-17 Saudi Ara… Thaila… Asia    Asia         44      66       0       0
+10 1993-09-25 Nigeria    Côte d… Africa  Africa       18      31       0       0
+# … with 2,533 more rows, 16 more variables: home_team_score &lt;dbl&gt;,
+#   away_team_score &lt;dbl&gt;, tournament &lt;chr&gt;, city &lt;chr&gt;, country &lt;chr&gt;,
+#   neutral_location &lt;lgl&gt;, shoot_out &lt;chr&gt;, home_team_result &lt;chr&gt;,
+#   home_team_goalkeeper_score &lt;dbl&gt;, away_team_goalkeeper_score &lt;dbl&gt;,
+#   home_team_mean_defense_score &lt;dbl&gt;, home_team_mean_offense_score &lt;dbl&gt;,
+#   home_team_mean_midfield_score &lt;dbl&gt;, away_team_mean_defense_score &lt;dbl&gt;,
+#   away_team_mean_offense_score &lt;dbl&gt;, away_team_mean_midfield_score &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Birden fazla koşul içeren filtreleme işlemi gerçekleştirmek için <strong>ve (<code>&amp;</code>), veya (<code>|</code>), değil (<code>!=</code>)</strong> gibi mantıksal operatörler kullanılabilir.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Türkiye'nin ev sahibi olarak oynadığı ve üçten fazla gol attığı maçları</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># filtreleme işlemi</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(worldcup, home_team <span class="sc">==</span> <span class="st">"Turkey"</span> <span class="sc">&amp;</span> home_team_score <span class="sc">&gt;</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 25
+   date       home_team away_t…¹ home_…² away_…³ home_…⁴ away_…⁵ home_…⁶ away_…⁷
+   &lt;date&gt;     &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 1994-10-12 Turkey    Iceland  Europe  Europe       39      37       0       0
+ 2 1996-11-10 Turkey    San Mar… Europe  Europe       35     161       0       0
+ 3 1997-08-20 Turkey    Wales    Europe  Europe       52      91       0       0
+ 4 2001-11-14 Turkey    Austria  Europe  Europe       34      53       0       0
+ 5 2002-10-16 Turkey    Liechte… Europe  Europe        7     147       0       0
+ 6 2004-10-09 Turkey    Kazakhs… Europe  Europe       12     145       0       0
+ 7 2005-11-16 Turkey    Switzer… Europe  Europe       11      38       0       0
+ 8 2006-10-11 Turkey    Moldova  Europe  Europe       28      85       0       0
+ 9 2009-09-05 Turkey    Estonia  Europe  Europe       27     114       0       0
+10 2013-09-06 Turkey    Andorra  Europe  Europe       58     205     572       7
+11 2015-06-08 Turkey    Bulgaria Europe  Europe       57      62     589     536
+12 2019-03-25 Turkey    Moldova  Europe  Europe       41     170    1443     979
+13 2021-03-24 Turkey    Netherl… Europe  Europe       32      14    1487    1609
+14 2021-11-13 Turkey    Gibralt… Europe  Europe       39     198    1460     863
+15 2022-06-04 Turkey    Faroe I… Europe  Europe       43     124    1461    1137
+# … with 16 more variables: home_team_score &lt;dbl&gt;, away_team_score &lt;dbl&gt;,
+#   tournament &lt;chr&gt;, city &lt;chr&gt;, country &lt;chr&gt;, neutral_location &lt;lgl&gt;,
+#   shoot_out &lt;chr&gt;, home_team_result &lt;chr&gt;, home_team_goalkeeper_score &lt;dbl&gt;,
+#   away_team_goalkeeper_score &lt;dbl&gt;, home_team_mean_defense_score &lt;dbl&gt;,
+#   home_team_mean_offense_score &lt;dbl&gt;, home_team_mean_midfield_score &lt;dbl&gt;,
+#   away_team_mean_defense_score &lt;dbl&gt;, away_team_mean_offense_score &lt;dbl&gt;,
+#   away_team_mean_midfield_score &lt;dbl&gt;, and abbreviated variable names …</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Eksik değerleri (NA: Non-available) filtreleyerek işlemlere devam etmek için <code>filter()</code> fonksiyonu içerisinde <code>is.na()</code> fonksiyonu ve değil mantıksal operatörü bir arada kullanılabilir.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(worldcup, <span class="sc">!</span><span class="fu">is.na</span>(home_team_goalkeeper_score))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8,379 × 25
+   date       home_team  away_…¹ home_…² away_…³ home_…⁴ away_…⁵ home_…⁶ away_…⁷
+   &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 2004-09-03 Netherlan… Liecht… Europe  Europe        6     152       0       0
+ 2 2004-09-03 Spain      Scotla… Europe  Europe        3      67       0       0
+ 3 2004-09-04 Austria    England Europe  Europe       90       7       0       0
+ 4 2004-09-04 Belgium    Lithua… Europe  Europe       29     118       0       0
+ 5 2004-09-04 Canada     Hondur… North … North …      99      47       0       0
+ 6 2004-09-04 Croatia    Hungary Europe  Europe       25      76       0       0
+ 7 2004-09-04 Denmark    Ukraine Europe  Europe       15      87       0       0
+ 8 2004-09-04 Estonia    Luxemb… Europe  Europe       81     157       0       0
+ 9 2004-09-04 Finland    Andorra Europe  Europe       53     148       0       0
+10 2004-09-04 France     Israel  Europe  Europe        2      69       0       0
+# … with 8,369 more rows, 16 more variables: home_team_score &lt;dbl&gt;,
+#   away_team_score &lt;dbl&gt;, tournament &lt;chr&gt;, city &lt;chr&gt;, country &lt;chr&gt;,
+#   neutral_location &lt;lgl&gt;, shoot_out &lt;chr&gt;, home_team_result &lt;chr&gt;,
+#   home_team_goalkeeper_score &lt;dbl&gt;, away_team_goalkeeper_score &lt;dbl&gt;,
+#   home_team_mean_defense_score &lt;dbl&gt;, home_team_mean_offense_score &lt;dbl&gt;,
+#   home_team_mean_midfield_score &lt;dbl&gt;, away_team_mean_defense_score &lt;dbl&gt;,
+#   away_team_mean_offense_score &lt;dbl&gt;, away_team_mean_midfield_score &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Görüldüğü gibi kaleci skoru 2004 yılı öncesinde oynanan maçlar için eksik gözlem değerleri içeren bir değişkendir.</p>
+</div></div></div></div></section>
+<section id="group_by-fonksiyonu" class="level2">
+<h2 class="anchored" data-anchor-id="group_by-fonksiyonu">5.3. <code>group_by()</code> fonksiyonu</h2>
+<p>Veri setini istenilen bir değişkenin aldığı değerlere göre alt kümelere ayırmak için kullanılır.</p>
+<p><img src="group_by.png" class="img-fluid"></p>
+<div align="justify">
+<p>Verisetini <code>group_by()</code> fonksiyonu ile maçları ev sahibi takım ülkelerinin bulundukları kıtalara göre alt kümelere (gruplara) ayıralım.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(worldcup, home_team_continent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 23,921 × 25
+# Groups:   home_team_continent [6]
+   date       home_team  away_…¹ home_…² away_…³ home_…⁴ away_…⁵ home_…⁶ away_…⁷
+   &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 1993-08-08 Bolivia    Uruguay South … South …      59      22       0       0
+ 2 1993-08-08 Brazil     Mexico  South … North …       8      14       0       0
+ 3 1993-08-08 Ecuador    Venezu… South … South …      35      94       0       0
+ 4 1993-08-08 Guinea     Sierra… Africa  Africa       65      86       0       0
+ 5 1993-08-08 Paraguay   Argent… South … South …      67       5       0       0
+ 6 1993-08-08 Peru       Colomb… South … South …      70      19       0       0
+ 7 1993-08-08 Zimbabwe   Eswati… Africa  Africa       50     102       0       0
+ 8 1993-08-09 Guinea     Sierra… Africa  Africa       65      86       0       0
+ 9 1993-08-11 Faroe Isl… Norway  Europe  Europe      111       9       0       0
+10 1993-08-11 Sweden     Switze… Europe  Europe        4       3       0       0
+# … with 23,911 more rows, 16 more variables: home_team_score &lt;dbl&gt;,
+#   away_team_score &lt;dbl&gt;, tournament &lt;chr&gt;, city &lt;chr&gt;, country &lt;chr&gt;,
+#   neutral_location &lt;lgl&gt;, shoot_out &lt;chr&gt;, home_team_result &lt;chr&gt;,
+#   home_team_goalkeeper_score &lt;dbl&gt;, away_team_goalkeeper_score &lt;dbl&gt;,
+#   home_team_mean_defense_score &lt;dbl&gt;, home_team_mean_offense_score &lt;dbl&gt;,
+#   home_team_mean_midfield_score &lt;dbl&gt;, away_team_mean_defense_score &lt;dbl&gt;,
+#   away_team_mean_offense_score &lt;dbl&gt;, away_team_mean_midfield_score &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+</div></section>
+<section id="summarise-fonksiyonu" class="level2">
+<h2 class="anchored" data-anchor-id="summarise-fonksiyonu">5.4. <code>summarise()</code> fonksiyonu</h2>
+<div align="justify">
+<p>Değişkenlerin ortalama, varyans vb. istatistiklerini hesaplayarak, veri setini özetlemek için kullanılır.</p>
+<p><img src="summarise.png" class="img-fluid"></p>
+<p>Veriseti üzerinde <code>summary()</code> fonksiyonu ile bir kaç özetleme uygulaması yapalım.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ev sahibi takımların gol ortalaması</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(worldcup, <span class="fu">mean</span>(home_team_score))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  `mean(home_team_score)`
+                    &lt;dbl&gt;
+1                    1.61</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Deplasman takımlarının gol ortalaması</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(worldcup, <span class="fu">mean</span>(away_team_score))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  `mean(away_team_score)`
+                    &lt;dbl&gt;
+1                    1.07</code></pre>
+</div>
+</div>
+<p>Bu işlemleri <code>{dplyr}</code> fonksiyonları kullanmadan da yapabilirdik.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ev sahibi takımların gol ortalaması</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(worldcup<span class="sc">$</span>home_team_score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.609214</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Deplasman takımlarının gol ortalaması</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(worldcup<span class="sc">$</span>away_team_score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.068266</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Bu işlemler sırasında eğer eksik veriler (NA) nedeniyle bir hata alırsanız, fonksiyon içerisinde eksik değerlerin göz ardı edilmesi için <code>na.rm</code> argümanını kullanabilirsiniz.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(worldcup<span class="sc">$</span>home_team_score, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.609214</code></pre>
+</div>
+</div>
+</div></div></section>
+<section id="mutate-fonksiyonu" class="level2">
+<h2 class="anchored" data-anchor-id="mutate-fonksiyonu">5.5. <code>mutate()</code> fonksiyonu</h2>
+<div align="justify">
+<p>Veri setinde yer alan sütunları (değişkenleri), aritmetik ve ilişkisel operatörler yardımıyla, yeni değişken(ler) oluşturmak için kullanılır.</p>
+<p><img src="mutate.png" class="img-fluid"></p>
+<div align="justify">
+<p>Veriseti üzerinde <code>mutate()</code> fonksiyonu ile ev sahibi takımların ortalama defans skoruna oranla kaç gol yediklerini gösteren yeni bir değişken (sütun) oluşturalım.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>worldcup2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(worldcup, </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                    defans_skor_oranı <span class="ot">=</span> away_team_score <span class="sc">/</span> home_team_mean_defense_score)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(worldcup2, <span class="fu">c</span>(<span class="st">"home_team"</span>, <span class="st">"away_team"</span>, <span class="st">"defans_skor_oranı"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 23,921 × 3
+   home_team     away_team    defans_skor_oranı
+   &lt;chr&gt;         &lt;chr&gt;                    &lt;dbl&gt;
+ 1 Bolivia       Uruguay                     NA
+ 2 Brazil        Mexico                      NA
+ 3 Ecuador       Venezuela                   NA
+ 4 Guinea        Sierra Leone                NA
+ 5 Paraguay      Argentina                   NA
+ 6 Peru          Colombia                    NA
+ 7 Zimbabwe      Eswatini                    NA
+ 8 Guinea        Sierra Leone                NA
+ 9 Faroe Islands Norway                      NA
+10 Sweden        Switzerland                 NA
+# … with 23,911 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(worldcup2, <span class="sc">!</span><span class="fu">is.na</span>(defans_skor_oranı))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7,787 × 26
+   date       home_team  away_…¹ home_…² away_…³ home_…⁴ away_…⁵ home_…⁶ away_…⁷
+   &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 2004-09-03 Netherlan… Liecht… Europe  Europe        6     152       0       0
+ 2 2004-09-03 Spain      Scotla… Europe  Europe        3      67       0       0
+ 3 2004-09-04 Austria    England Europe  Europe       90       7       0       0
+ 4 2004-09-04 Belgium    Lithua… Europe  Europe       29     118       0       0
+ 5 2004-09-04 Burkina F… Uganda  Africa  Africa       83     102       0       0
+ 6 2004-09-04 Canada     Hondur… North … North …      99      47       0       0
+ 7 2004-09-04 Croatia    Hungary Europe  Europe       25      76       0       0
+ 8 2004-09-04 Denmark    Ukraine Europe  Europe       15      87       0       0
+ 9 2004-09-04 Finland    Andorra Europe  Europe       53     148       0       0
+10 2004-09-04 France     Israel  Europe  Europe        2      69       0       0
+# … with 7,777 more rows, 17 more variables: home_team_score &lt;dbl&gt;,
+#   away_team_score &lt;dbl&gt;, tournament &lt;chr&gt;, city &lt;chr&gt;, country &lt;chr&gt;,
+#   neutral_location &lt;lgl&gt;, shoot_out &lt;chr&gt;, home_team_result &lt;chr&gt;,
+#   home_team_goalkeeper_score &lt;dbl&gt;, away_team_goalkeeper_score &lt;dbl&gt;,
+#   home_team_mean_defense_score &lt;dbl&gt;, home_team_mean_offense_score &lt;dbl&gt;,
+#   home_team_mean_midfield_score &lt;dbl&gt;, away_team_mean_defense_score &lt;dbl&gt;,
+#   away_team_mean_offense_score &lt;dbl&gt;, away_team_mean_midfield_score &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Görüldüğü gibi <code>{dplyr}</code> fonksiyonları bir çok sorguyu ayrı ayrı yapmamıza imkan veriyor ancak bu sorguları birleştirmeden anlamlı bir bilgiye ulaşmak kolay olmayabiliyor. Bunun için <code>{dplyr}</code> operatörlerinden faydalanacağız.</p>
+</div></div></div></section>
+<section id="arrange-fonksiyonu" class="level2">
+<h2 class="anchored" data-anchor-id="arrange-fonksiyonu">5.6. <code>arrange()</code> fonksiyonu</h2>
+<div align="justify">
+<p>Veri setinde yer alan gözlemleri (satırları) istenilen bir değişkenin değerlerine göre artan ya da azalan düzende sıralamak için kullanılır.</p>
+<p><img src="arrange.png" class="img-fluid"></p>
+<p>Veriseti üzerinde <code>arrange()</code> fonksiyonu ile bir kaç özetleme uygulaması yapalım.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(worldcup, home_team_fifa_rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 23,921 × 25
+   date       home_team away_t…¹ home_…² away_…³ home_…⁴ away_…⁵ home_…⁶ away_…⁷
+   &lt;date&gt;     &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 1994-03-23 Germany   Italy    Europe  Europe        1      11       0       0
+ 2 1994-05-04 Brazil    Iceland  South … Europe        1      43       0       0
+ 3 1994-06-17 Germany   Bolivia  Europe  South …       1      43       0       0
+ 4 1994-06-21 Germany   Spain    Europe  Europe        1       5       0       0
+ 5 1994-06-27 Germany   Korea R… Europe  Asia          1      37       0       0
+ 6 1994-07-02 Germany   Belgium  Europe  Europe        1      27       0       0
+ 7 1995-02-22 Brazil    Slovakia South … Europe        1      44       0       0
+ 8 1995-03-29 Brazil    Honduras South … North …       1      53       0       0
+ 9 1995-06-04 Brazil    Sweden   South … Europe        1       6       0       0
+10 1995-06-06 Brazil    Japan    South … Asia          1      35       0       0
+# … with 23,911 more rows, 16 more variables: home_team_score &lt;dbl&gt;,
+#   away_team_score &lt;dbl&gt;, tournament &lt;chr&gt;, city &lt;chr&gt;, country &lt;chr&gt;,
+#   neutral_location &lt;lgl&gt;, shoot_out &lt;chr&gt;, home_team_result &lt;chr&gt;,
+#   home_team_goalkeeper_score &lt;dbl&gt;, away_team_goalkeeper_score &lt;dbl&gt;,
+#   home_team_mean_defense_score &lt;dbl&gt;, home_team_mean_offense_score &lt;dbl&gt;,
+#   home_team_mean_midfield_score &lt;dbl&gt;, away_team_mean_defense_score &lt;dbl&gt;,
+#   away_team_mean_offense_score &lt;dbl&gt;, away_team_mean_midfield_score &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Bu fonksiyon istenilen bir değişkenin (sütunun) değerlerine göre tüm gözlem değerlerini (satırları) artan şekilde (en düşük değerden en yüksek değere doğru) sıralar. Tam tersi şekilde sıralamak için <code>desc()</code> fonksiyonu kullanılır.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(worldcup, <span class="fu">desc</span>(home_team_fifa_rank))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 23,921 × 25
+   date       home_team  away_…¹ home_…² away_…³ home_…⁴ away_…⁵ home_…⁶ away_…⁷
+   &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 2018-11-18 Turks and… St. Vi… North … North …     211     175     855     955
+ 2 2019-03-24 San Marino Scotla… Europe  Europe      211      40     854    1446
+ 3 2019-09-06 San Marino Belgium Europe  Europe      211       1     839    1746
+ 4 2019-09-09 San Marino Cyprus  Europe  Europe      211      93     839    1258
+ 5 2022-06-05 San Marino Malta   Europe  Europe      211     169     776     971
+ 6 2022-06-09 San Marino Iceland Europe  Europe      211      63     776    1380
+ 7 2018-10-12 Bahamas    Antigu… North … North …     210     127     862    1122
+ 8 2018-10-13 Turks and… Guyana  North … South …     210     182     862     937
+ 9 2018-11-18 Bahamas    Anguil… North … North …     210     208     858     864
+10 2019-03-16 Bahamas    Turks … North … North …     210     208     858     864
+# … with 23,911 more rows, 16 more variables: home_team_score &lt;dbl&gt;,
+#   away_team_score &lt;dbl&gt;, tournament &lt;chr&gt;, city &lt;chr&gt;, country &lt;chr&gt;,
+#   neutral_location &lt;lgl&gt;, shoot_out &lt;chr&gt;, home_team_result &lt;chr&gt;,
+#   home_team_goalkeeper_score &lt;dbl&gt;, away_team_goalkeeper_score &lt;dbl&gt;,
+#   home_team_mean_defense_score &lt;dbl&gt;, home_team_mean_offense_score &lt;dbl&gt;,
+#   home_team_mean_midfield_score &lt;dbl&gt;, away_team_mean_defense_score &lt;dbl&gt;,
+#   away_team_mean_offense_score &lt;dbl&gt;, away_team_mean_midfield_score &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Veriseti maçların oynanma tarihlerine göre geçmişten günümüze doğru sıralanmıştır, bu sıralamayı da tersine çevirebiliriz.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(worldcup, <span class="fu">desc</span>(date))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 23,921 × 25
+   date       home_team  away_…¹ home_…² away_…³ home_…⁴ away_…⁵ home_…⁶ away_…⁷
+   &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 2022-06-14 Costa Rica New Ze… North … Oceania      31     101    1503    1206
+ 2 2022-06-14 Kuwait     Jordan  Asia    Asia        146      91    1059    1259
+ 3 2022-06-14 Indonesia  Nepal   Asia    Asia        159     168    1001     978
+ 4 2022-06-14 Palestine  Philip… Asia    Asia        100     133    1208    1117
+ 5 2022-06-14 Mongolia   Yemen   Asia    Asia        186     151     911    1046
+ 6 2022-06-14 Maldives   Sri La… Africa  Asia        156     205    1025     842
+ 7 2022-06-14 Uzbekistan Thaila… Asia    Asia         83     111    1286    1167
+ 8 2022-06-14 Afghanist… Cambod… Asia    Asia        150     171    1049     966
+ 9 2022-06-14 India      Hong K… Asia    Asia        106     147    1174    1053
+10 2022-06-14 Bahrain    Turkme… Asia    Asia         89     134    1262    1117
+# … with 23,911 more rows, 16 more variables: home_team_score &lt;dbl&gt;,
+#   away_team_score &lt;dbl&gt;, tournament &lt;chr&gt;, city &lt;chr&gt;, country &lt;chr&gt;,
+#   neutral_location &lt;lgl&gt;, shoot_out &lt;chr&gt;, home_team_result &lt;chr&gt;,
+#   home_team_goalkeeper_score &lt;dbl&gt;, away_team_goalkeeper_score &lt;dbl&gt;,
+#   home_team_mean_defense_score &lt;dbl&gt;, home_team_mean_offense_score &lt;dbl&gt;,
+#   home_team_mean_midfield_score &lt;dbl&gt;, away_team_mean_defense_score &lt;dbl&gt;,
+#   away_team_mean_offense_score &lt;dbl&gt;, away_team_mean_midfield_score &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+</div></div></div></section>
+</div></section>
+<section id="birleştirme-fonksiyonları" class="level1">
+<h1>6. Birleştirme fonksiyonları</h1>
+<div align="justify">
+<p>Data frame, tibble vb. yapıdaki iki veri yapısını bir ya da daha fazla referans değişken yardımıyla birleştirme işlemleridir.</p>
+<p><img src="join.png" class="img-fluid"></p>
+<div align="justify">
+<p><code>worldcup</code> veriseti üzerinde birleştirme uygulamaları yapabilmek için verisetinden iki ayrı veriseti oluşturalım. Bunun için öncelikle bir referens değişken ekleyelim.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>worldcup3 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(worldcup, <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(worldcup)[<span class="dv">1</span>])</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(worldcup3, <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"date"</span>, <span class="st">"home_team"</span>, <span class="st">"away_team"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 23,921 × 4
+      id date       home_team     away_team   
+   &lt;int&gt; &lt;date&gt;     &lt;chr&gt;         &lt;chr&gt;       
+ 1     1 1993-08-08 Bolivia       Uruguay     
+ 2     2 1993-08-08 Brazil        Mexico      
+ 3     3 1993-08-08 Ecuador       Venezuela   
+ 4     4 1993-08-08 Guinea        Sierra Leone
+ 5     5 1993-08-08 Paraguay      Argentina   
+ 6     6 1993-08-08 Peru          Colombia    
+ 7     7 1993-08-08 Zimbabwe      Eswatini    
+ 8     8 1993-08-09 Guinea        Sierra Leone
+ 9     9 1993-08-11 Faroe Islands Norway      
+10    10 1993-08-11 Sweden        Switzerland 
+# … with 23,911 more rows</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Görüldüğü gibi artık <code>id</code> isimli bir referans değişkenine sahip <code>worldcup3</code> isminde yeni bir veriseti oluşturduk. Bunu iki ayrı alt kümeye bölelim.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># worldcup3 verisetinde yer alan 20001-20005 satırlarındaki gözlem değerlerinin</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="co"># id, date, home_team, away_team değişkenlerinden oluşan bir veriseti oluşturalım.</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>wc1 <span class="ot">&lt;-</span> <span class="fu">select</span>(worldcup3[<span class="dv">20001</span><span class="sc">:</span><span class="dv">20005</span>, ], <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"date"</span>,<span class="st">"home_team"</span>, <span class="st">"away_team"</span>))</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="co"># worldcup3 verisetinde yer alan 20003-20007 satırlarındaki gözlem değerlerinin</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="co"># id, home_team_score, away_team_score değişkenlerinden oluşan bir veriseti oluşturalım.</span></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>wc2 <span class="ot">&lt;-</span> <span class="fu">select</span>(worldcup3[<span class="dv">20003</span><span class="sc">:</span><span class="dv">20007</span>, ], <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"home_team_score"</span>, <span class="st">"away_team_score"</span>))</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>wc1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+     id date       home_team            away_team     
+  &lt;int&gt; &lt;date&gt;     &lt;chr&gt;                &lt;chr&gt;         
+1 20001 2017-11-14 Slovakia             Norway        
+2 20002 2017-11-14 Tajikistan           Yemen         
+3 20003 2017-11-14 Trinidad and Tobago  Guyana        
+4 20004 2017-11-14 Turkmenistan         Chinese Taipei
+5 20005 2017-11-14 United Arab Emirates Uzbekistan    </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>wc2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+     id home_team_score away_team_score
+  &lt;int&gt;           &lt;dbl&gt;           &lt;dbl&gt;
+1 20003               1               1
+2 20004               2               1
+3 20005               1               0
+4 20006               0               0
+5 20007               1               1</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Oluşan iki yeni verisetinde bazı gözlem değerlerinin aynı olduklarını <code>id</code> değişkeni üzerinden görebiliriz. İzleyen bölümlerde birleştirme uygulamalarını gerçekleştirebiliriz.</p>
+<section id="inner_join-fonksiyonu" class="level2">
+<h2 class="anchored" data-anchor-id="inner_join-fonksiyonu">6.1. <code>inner_join()</code> fonksiyonu</h2>
+<div align="justify">
+<p>İki data frame’de ortak olarak yer alan gözlem değerleri korunur. Başka bir deyişle, bir gözlem değeri data frame’lerden her ikisinde de yer alması durumunda birleştirilmiş data frame’e eklenir.</p>
+<p><img src="inner_join.png" class="img-fluid"></p>
+<div align="justify">
+<p><code>wc1</code> ve <code>wc2</code> verisetlerini <code>id</code> değişkenini referans olarak kullanıp, <code>inner_join()</code> fonksiyonu ile birleştirelim.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(wc1, wc2, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+     id date       home_team            away_team      home_team_score away_te…¹
+  &lt;int&gt; &lt;date&gt;     &lt;chr&gt;                &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;
+1 20003 2017-11-14 Trinidad and Tobago  Guyana                       1         1
+2 20004 2017-11-14 Turkmenistan         Chinese Taipei               2         1
+3 20005 2017-11-14 United Arab Emirates Uzbekistan                   1         0
+# … with abbreviated variable name ¹​away_team_score</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Yukarıdaki kodu <code>by</code> argümanı kullanmadan da çalıştırabilirdik. R, referans değişkeni otomatik olarak bulabilir. Ancak birden fazla referans değişken olmaya aday değişken içeren verisetleri üzerinden çalışırken bu özellik hata yapmamıza, neden olabilir. Bu nedenle <code>by</code> argümanını kullanmak önemlidir.</p>
+</div></div></div></section>
+<section id="full_join-fonksiyonu" class="level2">
+<h2 class="anchored" data-anchor-id="full_join-fonksiyonu">6.2. <code>full_join()</code> fonksiyonu</h2>
+<div align="justify">
+<p>İki data frame’de yer alan tüm gözlem değerleri eşleşmeler önemli olmaksızın korunur. Başka bir deyişle, bir gözlem değeri data frame’lerden yalnızca birinde yer alsa bile birleştirilmiş data frame’e eklenir.</p>
+<p><img src="full_join.png" class="img-fluid"></p>
+<div align="justify">
+<p><code>wc1</code> ve <code>wc2</code> verisetlerini <code>id</code> değişkenini referans olarak kullanıp, <code>full_join()</code> fonksiyonu ile birleştirelim.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">full_join</span>(wc1, wc2, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 6
+     id date       home_team            away_team      home_team_score away_te…¹
+  &lt;int&gt; &lt;date&gt;     &lt;chr&gt;                &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;
+1 20001 2017-11-14 Slovakia             Norway                      NA        NA
+2 20002 2017-11-14 Tajikistan           Yemen                       NA        NA
+3 20003 2017-11-14 Trinidad and Tobago  Guyana                       1         1
+4 20004 2017-11-14 Turkmenistan         Chinese Taipei               2         1
+5 20005 2017-11-14 United Arab Emirates Uzbekistan                   1         0
+6 20006 NA         &lt;NA&gt;                 &lt;NA&gt;                         0         0
+7 20007 NA         &lt;NA&gt;                 &lt;NA&gt;                         1         1
+# … with abbreviated variable name ¹​away_team_score</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Burada gerçekleşen birleştirme işlemi sonrasında her iki verisetinde yer almayan değerlerin eksik değerler (NA) olarak birleştirildiğine dikkat ediniz.</p>
+</div></div></div></section>
+<section id="left_join-fonksiyonu" class="level2">
+<h2 class="anchored" data-anchor-id="left_join-fonksiyonu">6.3. <code>left_join()</code> fonksiyonu</h2>
+<div align="justify">
+<p>Solda yer alan data frame’deki tüm gözlem değerleri, sağda yer alan data frame’de eşleşmeleri olmasa bile korunur. Eşleşmeyen gözlem değerlerinin aldığı değerler, birleştirilmiş data frame’de eksik gözlem (NA: non-available) olarak görülür.</p>
+<p><img src="left_join.png" class="img-fluid"></p>
+<div align="justify">
+<p><code>wc1</code> ve <code>wc2</code> verisetlerini <code>id</code> değişkenini referans olarak kullanıp, <code>left_join()</code> fonksiyonu ile birleştirelim.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(wc1, wc2, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 6
+     id date       home_team            away_team      home_team_score away_te…¹
+  &lt;int&gt; &lt;date&gt;     &lt;chr&gt;                &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;
+1 20001 2017-11-14 Slovakia             Norway                      NA        NA
+2 20002 2017-11-14 Tajikistan           Yemen                       NA        NA
+3 20003 2017-11-14 Trinidad and Tobago  Guyana                       1         1
+4 20004 2017-11-14 Turkmenistan         Chinese Taipei               2         1
+5 20005 2017-11-14 United Arab Emirates Uzbekistan                   1         0
+# … with abbreviated variable name ¹​away_team_score</code></pre>
+</div>
+</div>
+<div align="justify">
+<p><code>full_join()</code> birleştirme işlemine benzer şekilde burada da her iki verisetinde yer almayan değerlerin eksik değerler (NA) olarak birleştirildiğine dikkat ediniz.</p>
+</div></div></div></section>
+<section id="right_join-fonksiyonu" class="level2">
+<h2 class="anchored" data-anchor-id="right_join-fonksiyonu">6.4. <code>right_join()</code> fonksiyonu</h2>
+<div align="justify">
+<p>Sağda yer alan data frame’deki tüm gözlem değerleri, solda yer alan data frame’de eşleşmeleri olmasa bile korunur. Eşleşmeyen gözlem değerlerinin aldığı değerler, birleştirilmiş data frame’de eksik gözlem (NA: non-available) olarak görülür.</p>
+<p><img src="right_join.png" class="img-fluid"></p>
+<div align="justify">
+<p><code>wc1</code> ve <code>wc2</code> verisetlerini <code>id</code> değişkenini referans olarak kullanıp, <code>right</code>_join()` fonksiyonu ile birleştirelim.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">right_join</span>(wc1, wc2, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 6
+     id date       home_team            away_team      home_team_score away_te…¹
+  &lt;int&gt; &lt;date&gt;     &lt;chr&gt;                &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;
+1 20003 2017-11-14 Trinidad and Tobago  Guyana                       1         1
+2 20004 2017-11-14 Turkmenistan         Chinese Taipei               2         1
+3 20005 2017-11-14 United Arab Emirates Uzbekistan                   1         0
+4 20006 NA         &lt;NA&gt;                 &lt;NA&gt;                         0         0
+5 20007 NA         &lt;NA&gt;                 &lt;NA&gt;                         1         1
+# … with abbreviated variable name ¹​away_team_score</code></pre>
+</div>
+</div>
+<div align="justify">
+<p><code>full_join()</code> birleştirme işlemine benzer şekilde burada da her iki verisetinde yer almayan değerlerin eksik değerler (NA) olarak birleştirildiğine dikkat ediniz.</p>
+</div></div></div></section>
+</div></div></div></div></section>
+<section id="dplyr-operatörleri" class="level1">
+<h1>7. <code>{dplyr}</code> operatörleri</h1>
+<section id="pipe-operatörü" class="level2">
+<h2 class="anchored" data-anchor-id="pipe-operatörü">7.1. Pipe (<code>%&gt;%</code>) operatörü</h2>
+<div align="justify">
+<p>Pipe (<em>Payp</em>) operatörü temel olarak, <code>x %&gt;% f(x)</code> şeklinde soldaki veriseti üzerinde sağdaki fonksiyonda yer alan işlemi yapmak için kullanılır.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">4</span>, <span class="dv">6</span>)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6.5</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Temel işlevinin yanı sıra, uygulamada sıklıkla <code>{dplyr}</code> tipi fonksiyonları birbirine bağlamak için kullanılır.</p>
+<div align="justify">
+<p>Örneğin, <code>worldcup</code> verisetini kullanarak, 2000-2010 yılları arasına ev sahibi ve deplasman takımlarının ortalama gol sayılarını hesaplayalım. Bu işlem birkaç adımdan oluşur ve birden fazla <code>{dplyr}</code> fonksiyonu kullanılmasını gerektirir.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>worldcup <span class="sc">%&gt;%</span> </span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&lt;</span> <span class="st">"2010-12-31"</span> <span class="sc">&amp;</span> date <span class="sc">&gt;</span> <span class="st">"2000-01-01"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(evSahibiTakımOrtalamaGol <span class="ot">=</span> <span class="fu">mean</span>(home_team_score),</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>            DeplasmanTakımıOrtalamaGol <span class="ot">=</span> <span class="fu">mean</span>(away_team_score))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  evSahibiTakımOrtalamaGol DeplasmanTakımıOrtalamaGol
+                     &lt;dbl&gt;                      &lt;dbl&gt;
+1                     1.64                       1.08</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Burada öncelikle ilgili tarihler arasında oynanan maçların filtrelendiğini ve sonrasında istenilen istatistiklerin hesaplanabildiğini unutmayınız.</p>
+<div align="justify">
+<p>Aynı uygulamayı, Türk Milli Takımı özelinde yapalım. Bu uygulamayı gerçekleştirebilmek için Türk Milli Takımı’nın oynadığı maçları belirlemek (filtrelemek) gerekiyor. Bunu ayrı bir <code>filter()</code> fonksiyonu kullanarak yapabiliriz. Ancak hem ev sahibi hem de deplasman takımı olarak maç oynayabileceğini unutmamak gerekir.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>worldcup <span class="sc">%&gt;%</span> </span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(home_team <span class="sc">==</span> <span class="st">"Turkey"</span> <span class="sc">|</span> away_team <span class="sc">==</span> <span class="st">"Turkey"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&lt;</span> <span class="st">"2010-12-31"</span> <span class="sc">&amp;</span> date <span class="sc">&gt;</span> <span class="st">"2000-01-01"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(evSahibiTakımOrtalamaGol <span class="ot">=</span> <span class="fu">mean</span>(home_team_score),</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>            DeplasmanTakımıOrtalamaGol <span class="ot">=</span> <span class="fu">mean</span>(away_team_score))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  evSahibiTakımOrtalamaGol DeplasmanTakımıOrtalamaGol
+                     &lt;dbl&gt;                      &lt;dbl&gt;
+1                     1.38                       1.20</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Türk ve Portekiz Milli Takımları özelinde 2010 yılı sonrasında ev sahibi olarak oynadıkları maçlarda hücum gücüne oranla buldukları gol oranını hesaplamak isteyelim.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>worldcup <span class="sc">%&gt;%</span> </span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;</span> <span class="st">"2010-01-01"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(home_team <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Turkey"</span>, <span class="st">"Portugal"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(hücumGolOranı <span class="ot">=</span> home_team_score <span class="sc">/</span> home_team_mean_offense_score) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 162 × 26
+   date       home_team away_t…¹ home_…² away_…³ home_…⁴ away_…⁵ home_…⁶ away_…⁷
+   &lt;date&gt;     &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 2010-03-03 Portugal  China PR Europe  Asia          6      83       0       0
+ 2 2010-03-03 Turkey    Honduras Europe  North …      41      35       0       0
+ 3 2010-05-22 Turkey    Czech R… Europe  Europe       33      29       0       0
+ 4 2010-05-24 Portugal  Cabo Ve… Europe  Africa        3     117       0       0
+ 5 2010-06-01 Portugal  Cameroon Europe  Africa        3      19       0       0
+ 6 2010-06-21 Portugal  Korea D… Europe  Asia          3     105       0       0
+ 7 2010-06-25 Portugal  Brazil   Europe  South …       3       1       0       0
+ 8 2010-08-11 Turkey    Romania  Europe  Europe       28      42       0       0
+ 9 2010-09-03 Portugal  Cyprus   Europe  Europe        8      63       0       0
+10 2010-09-07 Turkey    Belgium  Europe  Europe       28      48       0       0
+# … with 152 more rows, 17 more variables: home_team_score &lt;dbl&gt;,
+#   away_team_score &lt;dbl&gt;, tournament &lt;chr&gt;, city &lt;chr&gt;, country &lt;chr&gt;,
+#   neutral_location &lt;lgl&gt;, shoot_out &lt;chr&gt;, home_team_result &lt;chr&gt;,
+#   home_team_goalkeeper_score &lt;dbl&gt;, away_team_goalkeeper_score &lt;dbl&gt;,
+#   home_team_mean_defense_score &lt;dbl&gt;, home_team_mean_offense_score &lt;dbl&gt;,
+#   home_team_mean_midfield_score &lt;dbl&gt;, away_team_mean_defense_score &lt;dbl&gt;,
+#   away_team_mean_offense_score &lt;dbl&gt;, away_team_mean_midfield_score &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Çıktıda yalnızca ilgilendiğimiz, <code>date</code>, <code>home_team</code>, <code>away_team</code>, ve <code>hücumGolOranı</code> değişkenlerini görmek istersek, <code>select()</code> fonksiyonunu kulllanabiliriz.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>worldcup <span class="sc">%&gt;%</span> </span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;</span> <span class="st">"2010-01-01"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(home_team <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Turkey"</span>, <span class="st">"Portugal"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(hücumGolOranı <span class="ot">=</span> home_team_score <span class="sc">/</span> home_team_mean_offense_score) <span class="sc">%&gt;%</span></span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date, home_team, away_team, hücumGolOranı)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 162 × 4
+   date       home_team away_team      hücumGolOranı
+   &lt;date&gt;     &lt;chr&gt;     &lt;chr&gt;                  &lt;dbl&gt;
+ 1 2010-03-03 Portugal  China PR              0.0237
+ 2 2010-03-03 Turkey    Honduras              0.0257
+ 3 2010-05-22 Turkey    Czech Republic        0.0257
+ 4 2010-05-24 Portugal  Cabo Verde            0     
+ 5 2010-06-01 Portugal  Cameroon              0.0356
+ 6 2010-06-21 Portugal  Korea DPR             0.0830
+ 7 2010-06-25 Portugal  Brazil                0     
+ 8 2010-08-11 Turkey    Romania               0.0257
+ 9 2010-09-03 Portugal  Cyprus                0.0471
+10 2010-09-07 Turkey    Belgium               0.0390
+# … with 152 more rows</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Eğer iki takımın yeni oluşturduğumuz değişken (<code>hücumGolOranı</code>) özelinde ortalamala ve varyanslarını hesaplamak istersek, <code>summarise()</code> fonksiyonunu da zincire ekleyebiliriz. Burada iki farklı takım için bu hesabı yapacağımız için öncelikle <code>group_by()</code> fonksiyonu ile gözlem değerlerini iki gruba ayırmamız gerektiğini unutmayınız.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>worldcup <span class="sc">%&gt;%</span> </span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;</span> <span class="st">"2010-01-01"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(home_team <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Turkey"</span>, <span class="st">"Portugal"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(hücumGolOranı <span class="ot">=</span> home_team_score <span class="sc">/</span> home_team_mean_offense_score) <span class="sc">%&gt;%</span></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(home_team) <span class="sc">%&gt;%</span> </span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ortalama =</span> <span class="fu">mean</span>(hücumGolOranı),</span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">varyans =</span> <span class="fu">var</span>(hücumGolOranı))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  home_team ortalama  varyans
+  &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;
+1 Portugal    0.0260 0.000459
+2 Turkey      0.0211 0.000310</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Eğer RStudio kullanıyorsanız, Ctrl + Shift + M kısayolu, MAC işletim sistemi kullanıyorsanız Cmd + Shift + M kısayolu ile pipe operatörünü yazabilirsiniz.</p>
+</div></div></div></div></div></div></div></div></div></section>
+<section id="yeni-pipe-operatörü" class="level2">
+<h2 class="anchored" data-anchor-id="yeni-pipe-operatörü">7.2. Yeni pipe (<code>|&gt;</code>) operatörü</h2>
+<div align="justify">
+<p>Pipe (<code>%&gt;%</code>) operatörü ile gerçekleştirdiğimiz tüm işlemleri, yeni pipe (<code>|&gt;</code>) operatörü ile de yapabiliriz. İkisi arasındaki fark, önceki derste değindiğimiz <code>data.frame</code> ve <code>tibble</code> veri yapılarının arasındaki farklara benzer <em>yazılımsal</em> iyileştirmelerdir. Bu farklara ilişkin detaylı bilgilere <a href="https://www.r-bloggers.com/2021/05/the-new-r-pipe/">buradan</a> göz atabilirsiniz.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>worldcup <span class="sc">|&gt;</span> </span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;</span> <span class="st">"2010-01-01"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(home_team <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Turkey"</span>, <span class="st">"Portugal"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(hücumGolOranı <span class="ot">=</span> home_team_score <span class="sc">/</span> home_team_mean_offense_score) <span class="sc">|&gt;</span></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(home_team) <span class="sc">|&gt;</span> </span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ortalama =</span> <span class="fu">mean</span>(hücumGolOranı),</span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">varyans =</span> <span class="fu">var</span>(hücumGolOranı))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  home_team ortalama  varyans
+  &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;
+1 Portugal    0.0260 0.000459
+2 Turkey      0.0211 0.000310</code></pre>
+</div>
+</div>
+</div></section>
+</section>
+<section id="pivot-fonksiyonları" class="level1">
+<h1>8. Pivot fonksiyonları</h1>
+<div align="justify">
+<p>Pivot fonksiyonları ileri veri işleme adımları için oldukça kullanışlıdırlar. <code>{dplyr}</code> paketi ile birlikte aynı meta-paket içerisinde yer alan <code>{tidyr}</code> paketinde yer almaktadırlar.</p>
+<div align="justify">
+<p>Bu fonksiyonları kullanabilmek için öncelikle <code>{tidyr}</code> paketinin yüklenmesi ve çalışma ortamına çağrılması gerekmektedir.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyr"</span>)</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="pivot_longer-fonksiyonu" class="level2">
+<h2 class="anchored" data-anchor-id="pivot_longer-fonksiyonu">8.1. <code>pivot_longer()</code> fonksiyonu</h2>
+<div align="justify">
+<p><code>pivot_longer()</code> fonksiyonu, satır sayısını artırarak ve sütun sayısını azaltarak verisetini <em>uzatır</em>.</p>
+<p><img src="pivot_longer.png" class="img-fluid"></p>
+<div align="justify">
+<p><code>worldcup</code> veriseti üzerinde özet bir tablo oluşturup, <code>pivot_longer()</code> fonksiyonunu kullanarak tabloyu uzatalım.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>ozet_tablo <span class="ot">&lt;-</span> worldcup <span class="sc">%&gt;%</span> </span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;</span> <span class="st">"2010-01-01"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(home_team <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Turkey"</span>, <span class="st">"Portugal"</span>, <span class="st">"Wales"</span>, <span class="st">"England"</span>, <span class="st">"Poland"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(hücumGolOranı <span class="ot">=</span> home_team_score <span class="sc">/</span> home_team_mean_offense_score) <span class="sc">%&gt;%</span></span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(home_team) <span class="sc">%&gt;%</span> </span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ortalama =</span> <span class="fu">mean</span>(hücumGolOranı),</span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">varyans =</span> <span class="fu">var</span>(hücumGolOranı))</span>
+<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a><span class="fu">pivot_longer</span>(ozet_tablo, <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"ortalama"</span>, <span class="st">"varyans"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 3
+   home_team name        value
+   &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;
+ 1 England   ortalama 0.0236  
+ 2 England   varyans  0.000327
+ 3 Poland    ortalama 0.0216  
+ 4 Poland    varyans  0.000353
+ 5 Portugal  ortalama 0.0260  
+ 6 Portugal  varyans  0.000459
+ 7 Turkey    ortalama 0.0211  
+ 8 Turkey    varyans  0.000310
+ 9 Wales     ortalama 0.0177  
+10 Wales     varyans  0.000279</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Burada oluşan uzatılmış tabloda <code>ortalama</code> ve <code>varyans</code> değişkenleri (sütunları), <code>name</code> adı altında yeni bir değişkenin değerlerine dönüşmüş ve karşılık gelen değerler ise <code>value</code> isminde bir değişken içerisinde yer almıştır. Bu işleme, veri görselleştirme, modelleme ve analiz işlemlerinde sıklıkla ihtiyaç duyulmaktadır.</p>
+</div></div></div></section>
+<section id="pivot_wider-fonksiyonu" class="level2">
+<h2 class="anchored" data-anchor-id="pivot_wider-fonksiyonu">8.2. <code>pivot_wider()</code> fonksiyonu</h2>
+<div align="justify">
+<p><code>pivot_wider()</code> fonskiyonu ise sütun sayısını artırarak ve satır sayısını azaltarak verisetini <em>genişletir</em>.</p>
+<p><img src="pivot_wider.png" class="img-fluid"></p>
+<div align="justify">
+<p><code>worldcup</code> veriseti üzerinde özet bir tablo oluşturup, <code>pivot_wider()</code> fonksiyonunu kullanarak tabloyu genişletelim.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>ozet_tablo <span class="ot">&lt;-</span> worldcup <span class="sc">%&gt;%</span> </span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;</span> <span class="st">"2010-01-01"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(home_team <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Turkey"</span>, <span class="st">"Portugal"</span>, <span class="st">"Wales"</span>, <span class="st">"England"</span>, <span class="st">"Poland"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(hücumGolOranı <span class="ot">=</span> home_team_score <span class="sc">/</span> home_team_mean_offense_score) <span class="sc">%&gt;%</span></span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(home_team) <span class="sc">%&gt;%</span> </span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ortalama =</span> <span class="fu">mean</span>(hücumGolOranı))</span>
+<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pivot_wider</span>(ozet_tablo, </span>
+<span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">names_from =</span> home_team,</span>
+<span id="cb80-10"><a href="#cb80-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">values_from =</span> ortalama)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 5
+  England Poland Portugal Turkey  Wales
+    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1  0.0236 0.0216   0.0260 0.0211 0.0177</code></pre>
+</div>
+</div>
+<div align="justify">
+<p>Burada oluşan genişletilmiş tabloda <code>home_team</code> değişkeninde yer alan gözlem değerlerinin her biri ayrı değişkene (sütuna) dönüşmüş ve karşılık gelen <code>ortalama</code> değişkeni değerleri de bu değişkenlerin gözlem değeri olmuşlardır. Burada oluşan sütun sayısı <code>names_from</code> argümanına eşitlenen değişkenin düzey (tekil gözlem) sayısına bağlıdır.</p>
+</div></div></div></section>
+</div></div></section>
+<section id="iletişim" class="level1">
+<h1>İletişim</h1>
+<p>Mustafa Çavuş, Eskişehir Teknik Üniversitesi, İstatistik Bölümü</p>
+<p>E-posta: <a href="mustafacavus@eskisehir.edu.tr">mustafacavus@eskisehir.edu.tr</a></p>
+<p>LinkedIn: <a href="https://www.linkedin.com/in/mustafacavusphd/">https://www.linkedin.com/in/mustafacavusphd/</a></p>
+<p>Twitter: <a href="https://twitter.com/mustafa__cavus">https://twitter.com/mustafa__cavus</a></p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

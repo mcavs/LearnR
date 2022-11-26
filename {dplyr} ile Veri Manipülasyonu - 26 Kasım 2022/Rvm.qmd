@@ -1,0 +1,504 @@
+---
+title: ""
+author: "Mustafa Çavuş, Ph.D."
+format: html
+editor: visual
+---
+
+![](banner.png)
+
+# Giriş
+
+<div align="justify">Veri görselleştirme, analiz etme ve modelleme gibi temel uygulamaların **en uzun** ve **zorlu süreci**, yapılandırılmış ya da yapılandırılmamış veriyi hazır hale getirmek için gerekli (ön) işlemlerin gerçekleştirilmesinden oluşan **veri (ön) işleme sürecidir**.
+
+Bu süreçte, farklı veri kaynaklarından elde edilen düzenli olmayan, yapılandırılmamış veri üzerinde yapılması gereken işlemler, veri ön işlemleri; düzenli, yapılandırılmış veriler üzerinde bir sonraki adıma hazır hali getirmek üzere yapılan işlemler ise veri işlemleri olarak adlandırılır.
+
+Tüm bu işlemler, temel (*base*) R'da yer alan fonksiyonlar yardımıyla gerçekleştirilebilir. Ancak bu fonksiyonların daha kullanışlı versiyonları, R kullanıcılarının **alet seti** olarak da betimlenen, `{dplyr}` paketinde sunulmaktadır. Bu eğitimde, öncelikle düzenli (*tidy*) veri yapısı tanıtılacak ve sonrasında ise veri (ön) işleme adımlarında kullanılan `{dplyr}` ve `{tidyr}` fonksiyonlarının temel işlevleri ve uygulamaları ele alınacaktır.
+
+
+# 1. Düzenli (*Tidy*) Veri Yapısı
+
+<div align="justify">Tidy veri seti yapısında, her bir sütuna bir değişkeni, her bir satıra ise bir gözlem şeklinde yerleştirilmiştir.
+
+![](tidy_veri.png){fig-align="center"}
+
+Yukarıdaki tidy veri yapısında her bir hücre, bir gözlem birimini temsil eder. Bu tür yapıdaki oluşturulan ve/veya kullanılan bir veri seti üzerinde bir çok karmaşık sorgu işlemini yapabilmek için R'da kullanışlı paketler ve fonksiyonlar bulunmaktadır.
+
+# 2. Veri Manipülasyonu
+
+<div align="justify">Veri manipülasyonu (işleme), veri setini analiz için hazırladığımız bir süreçtir. Veriyi ayıklama (filtreleme), özetleme, yeni değişkenler oluşturma gibi adımlar içerir.
+
+# 3. `{dplyr}` paketi
+
+<div align="justify">`{dplyr}` paketi tidy veri yapısı üzerinde işlem yapabilmek için kullanışlı fonksiyonları içeren bir pakettir. R'da yer alan temel fonksiyonlara göre daha hızlı ve efektif şekilde çalışırlar. Veri görselleştirme başta olmak üzere, bir çok paket içeren `{tidyverse}` meta-paket ailesinin bir parçasıdır. Bu özellik, `{dplyr}` paketinin diğer paketler ile uyum içerisinde çalışabilmeyi sağlar.
+
+| temel R                                        | `{dplyr}`     |
+|------------------------------------------------|---------------|
+| `df[c("x", "y")]` veya `subset()`              | `select()`    |
+| `df[which(x), , drop = FALSE]` veya `subset()` | `filter()`    |
+| `df[order(x), , drop = FALSE]`                 | `arrange()`   |
+| `mean(df$x), tapply(), aggregate(), by()`      | `summarise()` |
+| `df$z <- df$x + df$y` veya `transform()`       | `mutate()`    |
+
+: Tablo 1: Bazı `{dplyr}` fonksiyonlarının temel R'daki karşılıkları
+
+
+# 4. `{dplyr}` ve SQL
+
+<div align="justify">SQL veri analizi için kullanılan en eski dillerden biridir. Ancak SQL veri analizi yapmak için değil, verileri sorgulamak ve özetlemek için tasarlanmıştır. SQL, çok sayıda değişken üzerinde veri analiz sürecinde ihtiyaç duyulan tüm işlemleri yapmak için elverişli değildir. `{dplyr}`, `{numpy}` ve `{pandas}` gibi paketler bu konuda daha kullanışlıdırlar. Yine de, R, Python, SAS gibi modern veri analizi için kullanılan programlama dilleri ve yazılımları, SQL komutlarını destekler.
+
+`{dplyr}` paketinin sağladığı fonksiyonların karşılık geldiği SQL fonksiyonları Tablo 1'de verilmiştir.
+
+| `{dplyr}`    | SQL            |
+|--------------|----------------|
+| `select()`   | `SELECT`       |
+| `filter()`   | `WHERE`        |
+| `group_by()` | `GROUP BY`     |
+| `arrange()`  | `ORDER BY`     |
+| `join()`     | `JOIN`         |
+| `mutate()`   | `COLUMN ALIAS` |
+
+: Tablo 1: `{dplyr}` ve SQL fonksiyonlarının eşdeğerleri {#tbl-letters}
+
+
+# 5. Temel `{dplyr}` fonksiyonları
+
+<div align="justify">`summarise()`, `filter()`, `select()`, ve `mutate()` başta olmak üzere bir çok fonksiyon sunmaktadır. Bu bölümde en sık kullanılan bu dört fonksiyonu ele alacağız.
+
+Öncelikle `{dplyr}` paketini yükleyip, çağıralım:
+
+```{r, warning=FALSE, message=FALSE}
+install.packages("dplyr")
+library(dplyr)
+```
+
+
+## 5.1. `select()` fonksiyonu
+
+<div align="justify">Veri setinde istenilen sütunları (değişkenleri) seçmek için kullanılır.
+
+![](select.png)
+
+<div align="justify">Kaggle'da yer alan 1993 yılından günümüze kadar oynanan tüm uluslararası futbol maçlarına ilişkin değişkenleri içeren veri setini kullanalım. Verisetini bağlantı üzerinden indirebilirsiniz: [https://www.kaggle.com/datasets/brenda89/fifa-world-cup-2022]()
+
+```{r, message=FALSE, warning=FALSE}
+library(readr)
+worldcup <- read_csv("international_matches.csv")
+```
+
+```{r}
+str(worldcup)
+```
+
+<div align="justify">Bu veriseti, 1993 yılından bugüne kadar oynanan tüm uluslararası futbol maçlarına ilişkin bilgilerin yanı sıra, her takımın gücü, gerçek FIFA sıralamalarını, EA Sport FIFA video oyununa dayalı oyuncu güçlerine ilişkin verileri içermektedir.
+
+Veriseti üzerinde `select()` fonksiyonu ile bir kaç özetleme uygulaması yapalım.
+
+```{r}
+select(worldcup, tournament)
+```
+
+<div align="justify">Bir veya bir kaç değişken dışında geri kalan tüm değişkenleri seçmek için aşağıdaki kod kullanılır.
+
+```{r, error = FALSE}
+# city değişkeni (sütunu) hariç diğer değişkenlerin seçimi
+select(worldcup, -city)
+
+# city ve date değişkeni (sütunu) hariç diğer değişkenlerin seçimi
+select(worldcup, -c(date, city))
+```
+
+<div align="justify">Bir metinsel ifade içeren tüm değişkenleri seçmek için `contains()` fonksiyonu kullanılabilir.
+
+```{r}
+select(worldcup, contains("fifa"))
+```
+
+<div align="justify">Bir metinsel ifade ile başlayan tüm değişkenleri seçmek için `starts_with()` fonksiyonu, biten tüm değişkenleri seçmek için ise `ends_with()` fonksiyonu kullanılır.
+
+```{r}
+select(worldcup, starts_with("home_team"))
+```
+
+<div align="justify">İlk üç sırada yer alan değişkenleri ya da belirli sıralarda yer alan değişkenleri seçmek için ise yol tercih edilebilir.
+
+```{r}
+# İlk üç sıradaki değişkeni seçme işlemi
+select(worldcup, 1:3)
+
+# 2, 3, ve 7.sıralardaki değişkenleri seçme işlemi
+select(worldcup, c(2, 3, 7))
+```
+
+## 5.2. `filter()` fonksiyonu
+
+<div align="justify">Veri setinde istenilen ya da belirli koşulları sağlayan satırları (gözlem değerleri) seçmek, filtrelemek için kullanılır.
+
+![](filter.png)
+
+Veriseti üzerinde `filter()` fonksiyonu ile bir kaç özetleme uygulaması yapalım.
+
+```{r}
+# Türkiye'nin ev sahibi olarak oynadığı maçları filtreleme işlemi
+filter(worldcup, home_team == "Turkey")
+
+# Ev sahibi takımın üçten fazla gol attığı maçları filtreleme işlemi
+filter(worldcup, home_team_score > 3)
+```
+
+<div align="justify">Birden fazla koşul içeren filtreleme işlemi gerçekleştirmek için **ve (`&`), veya (`|`), değil (`!=`)** gibi mantıksal operatörler kullanılabilir.
+
+```{r}
+# Türkiye'nin ev sahibi olarak oynadığı ve üçten fazla gol attığı maçları
+# filtreleme işlemi
+filter(worldcup, home_team == "Turkey" & home_team_score > 3)
+```
+
+<div align="justify">Eksik değerleri (NA: Non-available) filtreleyerek işlemlere devam etmek için `filter()` fonksiyonu içerisinde `is.na()` fonksiyonu ve değil mantıksal operatörü bir arada kullanılabilir.
+
+```{r}
+filter(worldcup, !is.na(home_team_goalkeeper_score))
+```
+
+<div align="justify">Görüldüğü gibi kaleci skoru 2004 yılı öncesinde oynanan maçlar için eksik gözlem değerleri içeren bir değişkendir.
+
+## 5.3. `group_by()` fonksiyonu
+
+Veri setini istenilen bir değişkenin aldığı değerlere göre alt kümelere ayırmak için kullanılır.
+
+![](group_by.png)
+
+<div align="justify">Verisetini `group_by()` fonksiyonu ile maçları ev sahibi takım ülkelerinin bulundukları kıtalara göre alt kümelere (gruplara) ayıralım.
+
+```{r}
+group_by(worldcup, home_team_continent)
+```
+
+## 5.4. `summarise()` fonksiyonu
+
+<div align="justify">Değişkenlerin ortalama, varyans vb. istatistiklerini hesaplayarak, veri setini özetlemek için kullanılır.
+
+![](summarise.png)
+
+Veriseti üzerinde `summary()` fonksiyonu ile bir kaç özetleme uygulaması yapalım.
+
+```{r}
+# Ev sahibi takımların gol ortalaması
+summarise(worldcup, mean(home_team_score))
+
+# Deplasman takımlarının gol ortalaması
+summarise(worldcup, mean(away_team_score))
+```
+
+Bu işlemleri `{dplyr}` fonksiyonları kullanmadan da yapabilirdik.
+
+```{r}
+# Ev sahibi takımların gol ortalaması
+mean(worldcup$home_team_score)
+
+# Deplasman takımlarının gol ortalaması
+mean(worldcup$away_team_score)
+```
+
+
+<div align="justify">Bu işlemler sırasında eğer eksik veriler (NA) nedeniyle bir hata alırsanız, fonksiyon içerisinde eksik değerlerin göz ardı edilmesi için `na.rm` argümanını kullanabilirsiniz.
+
+```{r}
+mean(worldcup$home_team_score, na.rm = TRUE)
+```
+
+
+## 5.5. `mutate()` fonksiyonu
+
+<div align="justify">Veri setinde yer alan sütunları (değişkenleri), aritmetik ve ilişkisel operatörler yardımıyla, yeni değişken(ler) oluşturmak için kullanılır.
+
+![](mutate.png)
+
+
+<div align="justify">Veriseti üzerinde `mutate()` fonksiyonu ile ev sahibi takımların ortalama defans skoruna oranla kaç gol yediklerini gösteren yeni bir değişken (sütun) oluşturalım.
+
+```{r}
+worldcup2 <- mutate(worldcup, 
+                    defans_skor_oranı = away_team_score / home_team_mean_defense_score)
+
+select(worldcup2, c("home_team", "away_team", "defans_skor_oranı"))
+
+filter(worldcup2, !is.na(defans_skor_oranı))
+```
+
+<div align="justify">Görüldüğü gibi `{dplyr}` fonksiyonları bir çok sorguyu ayrı ayrı yapmamıza imkan veriyor ancak bu sorguları birleştirmeden anlamlı bir bilgiye ulaşmak kolay olmayabiliyor. Bunun için `{dplyr}` operatörlerinden faydalanacağız.
+
+
+## 5.6. `arrange()` fonksiyonu
+
+<div align="justify">Veri setinde yer alan gözlemleri (satırları) istenilen bir değişkenin değerlerine göre artan ya da azalan düzende sıralamak için kullanılır.
+
+![](arrange.png)
+
+Veriseti üzerinde `arrange()` fonksiyonu ile bir kaç özetleme uygulaması yapalım.
+
+```{r}
+arrange(worldcup, home_team_fifa_rank)
+```
+
+<div align="justify">Bu fonksiyon istenilen bir değişkenin (sütunun) değerlerine göre tüm gözlem değerlerini (satırları) artan şekilde (en düşük değerden en yüksek değere doğru) sıralar. Tam tersi şekilde sıralamak için `desc()` fonksiyonu kullanılır.
+
+```{r}
+arrange(worldcup, desc(home_team_fifa_rank))
+```
+
+<div align="justify">Veriseti maçların oynanma tarihlerine göre geçmişten günümüze doğru sıralanmıştır, bu sıralamayı da tersine çevirebiliriz.
+
+```{r}
+arrange(worldcup, desc(date))
+```
+
+# 6. Birleştirme fonksiyonları
+
+<div align="justify">Data frame, tibble vb. yapıdaki iki veri yapısını bir ya da daha fazla referans değişken yardımıyla birleştirme işlemleridir.
+
+![](join.png)
+
+<div align="justify">`worldcup` veriseti üzerinde birleştirme uygulamaları yapabilmek için verisetinden iki ayrı veriseti oluşturalım. Bunun için öncelikle bir referens değişken ekleyelim.
+
+```{r}
+worldcup3 <- mutate(worldcup, id = 1:dim(worldcup)[1])
+
+select(worldcup3, c("id", "date", "home_team", "away_team"))
+```
+
+<div align="justify">Görüldüğü gibi artık `id` isimli bir referans değişkenine sahip `worldcup3` isminde yeni bir veriseti oluşturduk. Bunu iki ayrı alt kümeye bölelim.
+
+```{r}
+# worldcup3 verisetinde yer alan 20001-20005 satırlarındaki gözlem değerlerinin
+# id, date, home_team, away_team değişkenlerinden oluşan bir veriseti oluşturalım.
+wc1 <- select(worldcup3[20001:20005, ], c("id", "date","home_team", "away_team"))
+
+# worldcup3 verisetinde yer alan 20003-20007 satırlarındaki gözlem değerlerinin
+# id, home_team_score, away_team_score değişkenlerinden oluşan bir veriseti oluşturalım.
+wc2 <- select(worldcup3[20003:20007, ], c("id", "home_team_score", "away_team_score"))
+
+wc1
+
+wc2
+```
+
+<div align="justify">Oluşan iki yeni verisetinde bazı gözlem değerlerinin aynı olduklarını `id` değişkeni üzerinden görebiliriz. İzleyen bölümlerde birleştirme uygulamalarını gerçekleştirebiliriz.
+
+
+## 6.1. `inner_join()` fonksiyonu
+
+<div align="justify">İki data frame'de ortak olarak yer alan gözlem değerleri korunur. Başka bir deyişle, bir gözlem değeri data frame'lerden her ikisinde de yer alması durumunda birleştirilmiş data frame'e eklenir.
+
+![](inner_join.png)
+
+<div align="justify">`wc1` ve `wc2` verisetlerini `id` değişkenini referans olarak kullanıp, `inner_join()` fonksiyonu ile birleştirelim.
+
+```{r}
+inner_join(wc1, wc2, by = "id")
+```
+
+<div align="justify">Yukarıdaki kodu `by` argümanı kullanmadan da çalıştırabilirdik. R, referans değişkeni otomatik olarak bulabilir. Ancak birden fazla referans değişken olmaya aday değişken içeren verisetleri üzerinden çalışırken bu özellik hata yapmamıza, neden olabilir. Bu nedenle `by` argümanını kullanmak önemlidir.
+
+
+## 6.2. `full_join()` fonksiyonu
+
+<div align="justify">İki data frame'de yer alan tüm gözlem değerleri eşleşmeler önemli olmaksızın korunur. Başka bir deyişle, bir gözlem değeri data frame'lerden yalnızca birinde yer alsa bile birleştirilmiş data frame'e eklenir.
+
+![](full_join.png)
+
+<div align="justify">`wc1` ve `wc2` verisetlerini `id` değişkenini referans olarak kullanıp, `full_join()` fonksiyonu ile birleştirelim.
+
+```{r}
+full_join(wc1, wc2, by = "id")
+```
+
+<div align="justify">Burada gerçekleşen birleştirme işlemi sonrasında her iki verisetinde yer almayan değerlerin eksik değerler (NA) olarak birleştirildiğine dikkat ediniz.
+
+
+## 6.3. `left_join()` fonksiyonu
+
+<div align="justify">Solda yer alan data frame'deki tüm gözlem değerleri, sağda yer alan data frame'de eşleşmeleri olmasa bile korunur. Eşleşmeyen gözlem değerlerinin aldığı değerler, birleştirilmiş data frame'de eksik gözlem (NA: non-available) olarak görülür.
+
+![](left_join.png)
+
+<div align="justify">`wc1` ve `wc2` verisetlerini `id` değişkenini referans olarak kullanıp, `left_join()` fonksiyonu ile birleştirelim.
+
+```{r}
+left_join(wc1, wc2, by = "id")
+```
+
+<div align="justify">`full_join()` birleştirme işlemine benzer şekilde burada da her iki verisetinde yer almayan değerlerin eksik değerler (NA) olarak birleştirildiğine dikkat ediniz.
+
+
+## 6.4. `right_join()` fonksiyonu
+
+<div align="justify">Sağda yer alan data frame'deki tüm gözlem değerleri, solda yer alan data frame'de eşleşmeleri olmasa bile korunur. Eşleşmeyen gözlem değerlerinin aldığı değerler, birleştirilmiş data frame'de eksik gözlem (NA: non-available) olarak görülür.
+
+![](right_join.png)
+
+<div align="justify">`wc1` ve `wc2` verisetlerini `id` değişkenini referans olarak kullanıp, `right`\_join()\` fonksiyonu ile birleştirelim.
+
+```{r}
+right_join(wc1, wc2, by = "id")
+```
+
+<div align="justify">`full_join()` birleştirme işlemine benzer şekilde burada da her iki verisetinde yer almayan değerlerin eksik değerler (NA) olarak birleştirildiğine dikkat ediniz.
+
+
+# 7. `{dplyr}` operatörleri
+
+## 7.1. Pipe (`%>%`) operatörü
+
+<div align="justify"> Pipe (*Payp*) operatörü temel olarak, `x %>% f(x)` şeklinde soldaki veriseti üzerinde sağdaki fonksiyonda yer alan işlemi yapmak için kullanılır. 
+
+```{r}
+data <- c(3, 6, 9, 11, 4, 6)
+data %>% mean
+```
+
+<div align="justify">Temel işlevinin yanı sıra, uygulamada sıklıkla `{dplyr}` tipi fonksiyonları birbirine bağlamak için kullanılır. 
+
+<div align="justify">Örneğin, `worldcup` verisetini kullanarak, 2000-2010 yılları arasına ev sahibi ve deplasman takımlarının ortalama gol sayılarını hesaplayalım. Bu işlem birkaç adımdan oluşur ve birden fazla `{dplyr}` fonksiyonu kullanılmasını gerektirir.
+
+```{r}
+worldcup %>% 
+  filter(date < "2010-12-31" & date > "2000-01-01") %>% 
+  summarise(evSahibiTakımOrtalamaGol = mean(home_team_score),
+            DeplasmanTakımıOrtalamaGol = mean(away_team_score))
+```
+
+<div align="justify">Burada öncelikle ilgili tarihler arasında oynanan maçların filtrelendiğini ve sonrasında istenilen istatistiklerin hesaplanabildiğini unutmayınız.
+
+<div align="justify">Aynı uygulamayı, Türk Milli Takımı özelinde yapalım. Bu uygulamayı gerçekleştirebilmek için Türk Milli Takımı'nın oynadığı maçları belirlemek (filtrelemek) gerekiyor. Bunu ayrı bir `filter()` fonksiyonu kullanarak yapabiliriz. Ancak hem ev sahibi hem de deplasman takımı olarak maç oynayabileceğini unutmamak gerekir. 
+
+```{r}
+worldcup %>% 
+  filter(home_team == "Turkey" | away_team == "Turkey") %>%
+  filter(date < "2010-12-31" & date > "2000-01-01") %>% 
+  summarise(evSahibiTakımOrtalamaGol = mean(home_team_score),
+            DeplasmanTakımıOrtalamaGol = mean(away_team_score))
+```
+
+<div align="justify">Türk ve Portekiz Milli Takımları özelinde 2010 yılı sonrasında ev sahibi olarak oynadıkları maçlarda hücum gücüne oranla buldukları gol oranını hesaplamak isteyelim. 
+
+```{r}
+worldcup %>% 
+  filter(date > "2010-01-01") %>% 
+  filter(home_team %in% c("Turkey", "Portugal")) %>% 
+  mutate(hücumGolOranı = home_team_score / home_team_mean_offense_score) 
+```
+
+<div align="justify">Çıktıda yalnızca ilgilendiğimiz, `date`, `home_team`, `away_team`, ve `hücumGolOranı` değişkenlerini görmek istersek, `select()` fonksiyonunu kulllanabiliriz.
+
+```{r}
+worldcup %>% 
+  filter(date > "2010-01-01") %>% 
+  filter(home_team %in% c("Turkey", "Portugal")) %>% 
+  mutate(hücumGolOranı = home_team_score / home_team_mean_offense_score) %>%
+  select(date, home_team, away_team, hücumGolOranı)
+```
+
+<div align="justify">Eğer iki takımın yeni oluşturduğumuz değişken (`hücumGolOranı`) özelinde ortalamala ve varyanslarını hesaplamak istersek, `summarise()` fonksiyonunu da zincire ekleyebiliriz. Burada iki farklı takım için bu hesabı yapacağımız için öncelikle `group_by()` fonksiyonu ile gözlem değerlerini iki gruba ayırmamız gerektiğini unutmayınız.
+
+
+```{r}
+worldcup %>% 
+  filter(date > "2010-01-01") %>% 
+  filter(home_team %in% c("Turkey", "Portugal")) %>% 
+  mutate(hücumGolOranı = home_team_score / home_team_mean_offense_score) %>%
+  group_by(home_team) %>% 
+  summarise(ortalama = mean(hücumGolOranı),
+            varyans = var(hücumGolOranı))
+```
+
+<div align="justify">Eğer RStudio kullanıyorsanız, Ctrl + Shift + M kısayolu, MAC işletim sistemi kullanıyorsanız Cmd + Shift + M kısayolu ile pipe operatörünü yazabilirsiniz.
+
+
+## 7.2. Yeni pipe (`|>`) operatörü
+
+<div align="justify">Pipe (`%>%`) operatörü ile gerçekleştirdiğimiz tüm işlemleri, yeni pipe (`|>`) operatörü ile de yapabiliriz. İkisi arasındaki fark, önceki derste değindiğimiz `data.frame` ve `tibble` veri yapılarının arasındaki farklara benzer *yazılımsal* iyileştirmelerdir. Bu farklara ilişkin detaylı bilgilere [buradan](https://www.r-bloggers.com/2021/05/the-new-r-pipe/) göz atabilirsiniz.
+
+```{r}
+worldcup |> 
+  filter(date > "2010-01-01") |> 
+  filter(home_team %in% c("Turkey", "Portugal")) |> 
+  mutate(hücumGolOranı = home_team_score / home_team_mean_offense_score) |>
+  group_by(home_team) |> 
+  summarise(ortalama = mean(hücumGolOranı),
+            varyans = var(hücumGolOranı))
+```
+
+
+# 8. Pivot fonksiyonları
+
+<div align="justify">Pivot fonksiyonları ileri veri işleme adımları için oldukça kullanışlıdırlar. `{dplyr}` paketi ile birlikte aynı meta-paket içerisinde yer alan `{tidyr}` paketinde yer almaktadırlar.
+
+<div align="justify">Bu fonksiyonları kullanabilmek için öncelikle `{tidyr}` paketinin yüklenmesi ve çalışma ortamına çağrılması gerekmektedir.
+
+```{r, warning=FALSE, message=FALSE}
+install.packages("tidyr")
+library(tidyr)
+```
+
+
+## 8.1. `pivot_longer()` fonksiyonu
+
+<div align="justify">`pivot_longer()` fonksiyonu, satır sayısını artırarak ve sütun sayısını azaltarak verisetini *uzatır*.
+
+![](pivot_longer.png)
+
+
+<div align="justify">`worldcup` veriseti üzerinde özet bir tablo oluşturup, `pivot_longer()` fonksiyonunu kullanarak tabloyu uzatalım.
+
+```{r}
+ozet_tablo <- worldcup %>% 
+  filter(date > "2010-01-01") %>% 
+  filter(home_team %in% c("Turkey", "Portugal", "Wales", "England", "Poland")) %>% 
+  mutate(hücumGolOranı = home_team_score / home_team_mean_offense_score) %>%
+  group_by(home_team) %>% 
+  summarise(ortalama = mean(hücumGolOranı),
+            varyans = var(hücumGolOranı))
+
+pivot_longer(ozet_tablo, cols = c("ortalama", "varyans"))
+```
+
+<div align="justify">Burada oluşan uzatılmış tabloda `ortalama` ve `varyans` değişkenleri (sütunları), `name` adı altında yeni bir değişkenin değerlerine dönüşmüş ve karşılık gelen değerler ise `value` isminde bir değişken içerisinde yer almıştır. Bu işleme, veri görselleştirme, modelleme ve analiz işlemlerinde sıklıkla ihtiyaç duyulmaktadır.
+
+
+## 8.2. `pivot_wider()` fonksiyonu
+
+<div align="justify">`pivot_wider()` fonskiyonu ise sütun sayısını artırarak ve satır sayısını azaltarak verisetini *genişletir*.
+
+![](pivot_wider.png)
+
+
+<div align="justify">`worldcup` veriseti üzerinde özet bir tablo oluşturup, `pivot_wider()` fonksiyonunu kullanarak tabloyu genişletelim.
+
+```{r}
+ozet_tablo <- worldcup %>% 
+  filter(date > "2010-01-01") %>% 
+  filter(home_team %in% c("Turkey", "Portugal", "Wales", "England", "Poland")) %>% 
+  mutate(hücumGolOranı = home_team_score / home_team_mean_offense_score) %>%
+  group_by(home_team) %>% 
+  summarise(ortalama = mean(hücumGolOranı))
+
+pivot_wider(ozet_tablo, 
+            names_from = home_team,
+            values_from = ortalama)
+```
+
+
+<div align="justify">Burada oluşan genişletilmiş tabloda `home_team` değişkeninde yer alan gözlem değerlerinin her biri ayrı değişkene (sütuna) dönüşmüş ve karşılık gelen `ortalama` değişkeni değerleri de bu değişkenlerin gözlem değeri olmuşlardır. Burada oluşan sütun sayısı `names_from` argümanına eşitlenen değişkenin düzey (tekil gözlem) sayısına bağlıdır.
+
+
+# İletişim
+
+Mustafa Çavuş, Eskişehir Teknik Üniversitesi, İstatistik Bölümü
+
+
+E-posta:    [mustafacavus@eskisehir.edu.tr](mustafacavus@eskisehir.edu.tr)
+
+LinkedIn:   [https://www.linkedin.com/in/mustafacavusphd/](https://www.linkedin.com/in/mustafacavusphd/)
+
+Twitter:    [https://twitter.com/mustafa__cavus](https://twitter.com/mustafa__cavus)
