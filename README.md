@@ -26,7 +26,7 @@ Passcode: 576960
 
 2. Açılan pencerede en altta bulunan `Download ZIP` butonuyla tüm dosyaları indiriniz.
 
-3. Ders materyallerine erişmek için indirdiğiniz dosyada yer alan `.html` uzantılı dosyayı açınız.
+3. Ders materyallerine erişmek için indirdiğiniz dosyalar arasında yer alan `.html` uzantılı dosyayı açınız.
 
 
 ## Teşekkür
