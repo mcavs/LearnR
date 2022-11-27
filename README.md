@@ -4,7 +4,7 @@
 ## Eğitim programı:
 
 1. R Programlamaya Giriş - 13 Kasım Pazar, 20:00-22:00 - [Kayıt :clapper:](https://www.youtube.com/watch?v=Q96d0heoMrw) ([@mcavs](https://github.com/mcavs))
-2. {dplyr} ile Veri Manipülasyonu - 26 Kasım Cumartesi, 20:00 - 22:00 ([@mcavs](https://github.com/mcavs))
+2. {dplyr} ile Veri Manipülasyonu - 26 Kasım Cumartesi, 20:00 - 22:00 - [Kayıt :clapper:](https://youtu.be/pfy9s6U8oMk) ([@mcavs](https://github.com/mcavs))
 3. {ggplot} ile Veri Görselleştirme - 17 Aralık Cumartesi ([@ugurdar](https://github.com/ugurdar))
 4. Shiny ile Arayüz Tasarımı - 19 Aralık Pazartesi ([@ugurdar](https://github.com/ugurdar))
 
